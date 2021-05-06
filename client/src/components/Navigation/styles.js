@@ -17,18 +17,15 @@ const theme = makeStyles({
     justifyContent: "flex-end",
     width: "100%",
   },
-  home: {
-    marginRight: "15px",
-    cursor: "pointer",
-  },
-  write: {
-    marginRight: "15px",
-    cursor: "pointer",
-  },
-  profile: {
-    marginRight: "15px",
-    cursor: "pointer",
-  },
+//   home: {
+//     cursor: "pointer",
+//   },
+//   write: {
+//     cursor: "pointer",
+//   },
+//   profile: {
+//     cursor: "pointer",
+//   },
 });
 
 export default theme;
