@@ -36,6 +36,10 @@ const theme = makeStyles((theme) => ({
   form: {
     width: "60%",
   },
+  formContainer: {
+    width: "100%",
+    alignItems: "center",
+  },
   grid: {
     display: "flex",
     flexDirection: "column",
@@ -52,14 +56,16 @@ const theme = makeStyles((theme) => ({
     border: 0,
     color: "black",
     height: 50,
-    width: "30%",
+    width: "70%",
     fontFamily: "'Playfair Display', serif",
     fontSize: 18,
+    alignSelf: "center",
   },
   google: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    alignSelf: "center",
     marginTop: "20px",
     textDecoration: "none",
     "&:hover": {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import useStyles from "./styles";
 import { Typography, Toolbar, AppBar, IconButton } from "@material-ui/core";
@@ -7,7 +7,10 @@ import "../../fonts.css";
 
 const Navigation = () => {
   const classes = useStyles();
-  const [navOpt, setNavOpt] = useState(1);
+  const location = useLocation();
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const navOpt = location.pathname;
 
   return (
     <AppBar
@@ -26,12 +29,7 @@ const Navigation = () => {
         Forgettable
       </Typography>
       <Toolbar className={classes.toolbar}>
-        <IconButton
-          className={classes.home}
-          component={Link}
-          to="/"
-          onClick={() => setNavOpt(1)}
-        >
+        <IconButton className={classes.home} component={Link} to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -42,18 +40,13 @@ const Navigation = () => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke={navOpt === 1 ? "#3EA3B0" : "black"}
+            stroke={navOpt === "/" ? "#3EA3B0" : "black"}
           >
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
         </IconButton>
-        <IconButton
-          className={classes.write}
-          component={Link}
-          to="/write"
-          onClick={() => setNavOpt(2)}
-        >
+        <IconButton className={classes.write} component={Link} to="/write">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -64,7 +57,7 @@ const Navigation = () => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke={navOpt === 2 ? "#3EA3B0" : "black"}
+            stroke={navOpt === "/write" ? "#3EA3B0" : "black"}
           >
             <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
             <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
@@ -75,8 +68,11 @@ const Navigation = () => {
         <IconButton
           className={classes.profile}
           component={Link}
-          to="/signin"
-          onClick={() => setNavOpt(3)}
+          to={
+            user?.result?.googleId || user?.result?._id
+              ? "/profile"
+              : "/profile/authenticate"
+          }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +84,11 @@ const Navigation = () => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke={navOpt === 3 ? "#3EA3B0" : "black"}
+            stroke={
+              navOpt === ("/profile/authenticate" || "/profile" || "/profile/authenticate")
+                ? "#3EA3B0"
+                : "black"
+            }
           >
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
