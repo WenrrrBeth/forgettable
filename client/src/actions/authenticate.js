@@ -4,6 +4,8 @@ import * as api from "../api/index";
 export const signin = (inputData, history) => async (dispatch) => {
     try {
         const { data } = await api.signin(inputData);
+        console.log("actions:")
+        console.log(data);
         dispatch({ type: AUTH, data });    // dispatch an action (reducer)
         history.push("/");
     } catch (error) {

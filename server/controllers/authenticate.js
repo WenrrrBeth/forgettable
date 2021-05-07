@@ -10,13 +10,15 @@ export const signin = async (req, res) => {
         const registeredUser = await Profile.findOne({ email });
         if(!registeredUser) return res.status(404).json({ message: "User doesn't exist." });
 
+        console.log(process.env.JWS_EXPIRES_IN);
+
         // check if the password is correct
-        const checkPassword = await bcrypt.compare(password, Profile.password);
+        const checkPassword = await bcrypt.compare(password, registeredUser.password);
         if(!checkPassword) return res.status(404).json({ message: "Incorrect password." });
 
         //signing the json web token
         const token = jwt.sign(
-            { email: registeredUser.email, id: registeredUser._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN }
+            { email: registeredUser.email, id: registeredUser._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWS_EXPIRES_IN }
         )
         res.status(200).json({ result: registeredUser, token })
     } catch (error) {
@@ -27,8 +29,6 @@ export const signin = async (req, res) => {
 
 export const signup = async (req, res) => {
     const { email, preferredName, password, confirmPassword } = req.body;
-
-    console.log(req.body);
 
     try {
         // email that match the email client entered, registeredUser exist meaning signup email already exist
