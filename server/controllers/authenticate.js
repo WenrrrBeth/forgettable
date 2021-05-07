@@ -10,8 +10,6 @@ export const signin = async (req, res) => {
         const registeredUser = await Profile.findOne({ email });
         if(!registeredUser) return res.status(404).json({ message: "User doesn't exist." });
 
-        console.log(process.env.JWS_EXPIRES_IN);
-
         // check if the password is correct
         const checkPassword = await bcrypt.compare(password, registeredUser.password);
         if(!checkPassword) return res.status(404).json({ message: "Incorrect password." });
