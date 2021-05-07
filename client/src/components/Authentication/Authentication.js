@@ -36,6 +36,7 @@ const Authentication = () => {
   const history = useHistory();
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
@@ -94,35 +95,40 @@ const Authentication = () => {
           </Typography>
         </Link>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <Grid container direction="column" alignItmes="center" justify="center">
+          <Grid
+            container
+            direction="column"
+            alignItmes="center"
+            justify="center"
+          >
             <ThemeProvider theme={theme}>
               <Grid className={classes.grid} container spacing={2}>
                 <TextField
                   className={classes.inputTheme}
                   name="email"
                   label="Email"
+                  onChange={handleChange}
                   variant="filled"
                   required
-                  handleChange={handleChange}
                 />
                 {!login && (
                   <TextField
                     className={classes.inputTheme}
                     name="preferredName"
                     label="Preferred Name"
+                    onChange={handleChange}
                     variant="filled"
                     required
-                    handleChange={handleChange}
                   />
                 )}
                 <TextField
                   className={classes.inputTheme}
                   name="password"
                   label="Password"
+                  onChange={handleChange}
                   variant="filled"
                   required
                   type={showPassword ? "text" : "password"}
-                  handleChange={handleChange}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -171,10 +177,10 @@ const Authentication = () => {
                     className={classes.inputTheme}
                     name="confirmPassword"
                     label="Confirm Password"
+                    onChange={handleChange}
                     required
                     type="password"
                     variant="filled"
-                    handleChange={handleChange}
                   />
                 )}
               </Grid>
