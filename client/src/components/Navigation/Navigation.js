@@ -85,7 +85,7 @@ const Navigation = () => {
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke={
-              navOpt === ("/profile/authenticate" || "/profile" || "/profile/authenticate")
+              navOpt === "/profile/authenticate" || navOpt === "/profile"
                 ? "#3EA3B0"
                 : "black"
             }
