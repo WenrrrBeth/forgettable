@@ -16,8 +16,14 @@ const profileSchema = mongoose.Schema({
   id: {
     type: String,
   },
-  profileimg: String,
-  bgimg: String,
+  profileimg: {
+    type: String,
+    default: "",
+  },
+  bgimg: {
+    type: String,
+    default: "",
+  },
   personal: [String],
   shared: [String],
   saved: [String],
