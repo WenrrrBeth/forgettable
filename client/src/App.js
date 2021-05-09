@@ -11,8 +11,6 @@ import Profile from "./components/Profile/Profile";
 function App() {
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  console.log(user)
-
   return (
     <BrowserRouter>
       <Container maxwidth="lg">
@@ -20,19 +18,8 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/write" exact component={Postform} />
-          <Route
-            path={
-              user?.result?.googleId || user?.result?._id
-                ? "/profile"
-                : "/profile/authenticate"
-            }
-            exact
-            component={
-              user?.result?.googleId || user?.result?._id
-                ? Profile
-                : Authentication
-            }
-          />
+          <Route path="/profile" exact component={Profile} />
+          <Route path="/profile/authenticate" exact component={Authentication} />
         </Switch>
       </Container>
     </BrowserRouter>
