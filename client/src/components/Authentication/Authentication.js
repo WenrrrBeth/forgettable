@@ -8,12 +8,11 @@ import {
   IconButton,
   Button,
   Link,
-  Box,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { GoogleLogin } from "react-google-login";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AUTH } from "../../constants/actiontypes";
@@ -36,7 +35,6 @@ const Authentication = () => {
   const history = useHistory();
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 

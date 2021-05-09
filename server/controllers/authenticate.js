@@ -43,6 +43,7 @@ export const signup = async (req, res) => {
             name: preferredName,
             password: hashPassword,
         });
+        const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWS_EXPIRES_IN });
         res.status(200).json({ result, token });
     } catch (error) {
         console.log(error);
