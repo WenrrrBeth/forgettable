@@ -46,7 +46,7 @@ const Navigation = () => {
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
         </IconButton>
-        <IconButton className={classes.write} component={Link} to="/write">
+        <IconButton className={classes.write} component={Link} to={user ? "/write" : "/profile/authenticate"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
