@@ -46,7 +46,7 @@ const theme = makeStyles((theme) => ({
     flexDirection: "column",
     zIndex: 1100,
     maxWidth: "350px",
-    marginTop: "-200px",
+    marginTop: "-190px",
     borderRadius: "50px",
     alignSelf: "center",
   },
