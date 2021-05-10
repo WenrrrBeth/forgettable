@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
 import useStyles from "./styles.js";
 import { LOGOUT } from "../../constants/actiontypes";
@@ -62,7 +62,7 @@ const Profile = () => {
             alt="default background image design"
           />
         </div>
-        <Card className={classes.nameCard}>
+        <Card className={classes.nameCard} elevation={0}>
           <div className={classes.userTop}>
             <CardMedia
               className={classes.profilePic}
@@ -94,7 +94,7 @@ const Profile = () => {
                     <circle cx="11" cy="11" r="2"></circle>
                   </svg>
                 </IconButton>
-                <IconButton>
+                <IconButton component={Link} to="/profile/settings">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
