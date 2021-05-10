@@ -96,7 +96,7 @@ const Authentication = () => {
           <Grid
             container
             direction="column"
-            alignItmes="center"
+            alignItems="center"
             justify="center"
           >
             <ThemeProvider theme={theme}>
