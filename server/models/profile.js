@@ -13,17 +13,40 @@ const profileSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  mind: String,
+  mind: {
+    type: String,
+    default: "",
+  },
   id: {
     type: String,
   },
   profileimg: {
-    type: String,
-    default: "",
+    filename: {
+      type: String,
+      default: "",
+    },
+    filetype: {
+      type: String,
+      default: "",
+    },
+    data: {
+      type: String,
+      default: "",
+    }
   },
   bgimg: {
-    type: String,
-    default: "",
+    filename: {
+      type: String,
+      default: "",
+    },
+    filetype: {
+      type: String,
+      default: "",
+    },
+    data: {
+      type: String,
+      default: "",
+    }
   },
   personal: [String],
   shared: [String],

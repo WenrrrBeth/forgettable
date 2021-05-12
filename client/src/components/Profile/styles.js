@@ -73,6 +73,7 @@ const theme = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    marginRight: "6px",
   },
   mind: {
     lineHeight: "20px",

@@ -37,16 +37,20 @@ const Navigation = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             stroke={navOpt === "/" ? "#3EA3B0" : "black"}
           >
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
         </IconButton>
-        <IconButton className={classes.write} component={Link} to={user ? "/write" : "/profile/authenticate"}>
+        <IconButton
+          className={classes.write}
+          component={Link}
+          to={user ? "/write" : "/profile/authenticate"}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -54,9 +58,9 @@ const Navigation = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             stroke={navOpt === "/write" ? "#3EA3B0" : "black"}
           >
             <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
@@ -81,11 +85,13 @@ const Navigation = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             stroke={
-              navOpt === "/profile/authenticate" || navOpt === "/profile" || navOpt === "/profile/settings"
+              navOpt === "/profile/authenticate" ||
+              navOpt === "/profile" ||
+              navOpt === "/profile/settings"
                 ? "#3EA3B0"
                 : "black"
             }

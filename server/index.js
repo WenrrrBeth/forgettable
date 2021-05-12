@@ -3,8 +3,9 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import fs from "fs";
 
-import profileRoutes from "./routes/authenticate.js"
+import profileRoutes from "./routes/profile.js"
 
 const app = express();
 dotenv.config();
