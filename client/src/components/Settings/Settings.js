@@ -64,17 +64,17 @@ const Settings = () => {
     toBase64(e.target.files[0])
       .then(result => {
         setUserData({
-        ...userData,
-        profileimg: {
-            filename: e.target.files[0].name,
-            filetype: e.target.files[0].type,
-            data: result,
-        },
+          ...userData,
+          profileimg: {
+              filename: e.target.files[0].name,
+              filetype: e.target.files[0].type,
+              data: result,
+          },
         })
       })
       .catch(err => {
           console.log(err);
-      })
+      });
   }
 
   const handleBgChange = (e) => {
@@ -143,7 +143,7 @@ const Settings = () => {
                 variant="filled"
                 required
                 multiline
-                rows={8}
+                rows={6}
                 defaultValue={profile?.mind}
               />
               <div className={classes.imgUpload}>

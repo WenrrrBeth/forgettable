@@ -4,16 +4,27 @@ import {
   Typography,
   TextField,
   Chip,
+  Button,
 } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useStyles from "./styles";
 import "../../fonts.css";
 
 const Postform = () => {
   const classes = useStyles();
   const [hashTags, setHashTags] = useState([]);
-  const [count, setCount] = useState(0);
+  const [fgtbData, setFgtbData] = useState({
+    by: "",
+    title: "",
+    content: "",
+    tags: [],
+    image: { filename: "", filetype: "", data: "" },
+    shared: false,
+  });
+  const [fgtbImgName, setFgtbImgName] = useState("No files choosen.");
   const handleSubmit = () => {};
 
   const theme = createMuiTheme({
@@ -26,53 +37,45 @@ const Postform = () => {
 
   const handleChange = (e) => {};
 
-  const handleDelete = () => {};
+  const handleDelete = (didx) => {
+    setHashTags([ ...hashTags.filter((_, idx) => idx!==didx)])
+  };
 
   const handleTagChange = (e) => {
     if (e.target.value.slice(-1) === " ") {
       setHashTags((hashTags) => [...hashTags, e.target.value.trim()]);
       e.target.value = "";
-      setCount(count + 1);
     }
   };
 
-  useEffect(() => {
-    console.log("useEffect");
-  }, [count]);
+  const toBase64 = (file) => {
+    return new Promise((resolve) => {
+      let reader = new FileReader();
+      let base = "";
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        base = e.target.result;
+        resolve(base);
+      };
+    });
+  };
 
-  const setChips = () => {
-    console.log("setChips");
-    if (hashTags.length > count) {
-      return (
-        <Chip
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="4" y1="9" x2="20" y2="9"></line>
-              <line x1="4" y1="15" x2="20" y2="15"></line>
-              <line x1="10" y1="3" x2="8" y2="21"></line>
-              <line x1="16" y1="3" x2="14" y2="21"></line>
-            </svg>
-          }
-          label="test"
-          clickable
-          color="primary"
-          onDelete={handleDelete}
-          variant="outlined"
-        />
-      );
-    } else {
-      return <Typography> No tags for now </Typography>;
-    }
+  const handleFgtbChange = (e) => {
+    setFgtbImgName(e.target.files[0].name);
+    toBase64(e.target.files[0])
+      .then((result) => {
+        setFgtbData({
+          ...fgtbData,
+          image: {
+            filename: e.target.files[0].name,
+            filetype: e.target.files[0].type,
+            data: result,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -95,7 +98,12 @@ const Postform = () => {
                 className={classes.inputTheme}
                 name="title"
                 label="Title"
-                onChange={handleChange}
+                onChange={(e) =>
+                  setFgtbData({
+                    ...fgtbData,
+                    title: e.target.value,
+                  })
+                }
                 variant="filled"
                 required
               />
@@ -103,11 +111,13 @@ const Postform = () => {
                 className={classes.inputTheme}
                 name="content"
                 label="Content"
-                onChange={handleChange}
+                onChange={(e) => {
+                  setFgtbData({ ...fgtbData, content: e.target.value });
+                }}
                 variant="filled"
                 required
                 multiline
-                rows={8}
+                rows={6}
               />
               <TextField
                 className={classes.inputTheme}
@@ -118,34 +128,71 @@ const Postform = () => {
                 required
               />
               <Container classNmae={classes.hashtag}>
-                <Chip
-                  icon={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      class="feather feather-hash"
-                    >
-                      <line x1="4" y1="9" x2="20" y2="9"></line>
-                      <line x1="4" y1="15" x2="20" y2="15"></line>
-                      <line x1="10" y1="3" x2="8" y2="21"></line>
-                      <line x1="16" y1="3" x2="14" y2="21"></line>
-                    </svg>
-                  }
-                  label="hello"
-                  clickable
-                  color="primary"
-                  onDelete={handleDelete}
-                  variant="outlined"
-                />
-                {setChips}
+                {/* { hashTags.length > 5 &&
+                    <Alert severity="warning">
+                      <AlertTitle>Warning</AlertTitle>
+                      This is a reminder that you have added more than 5 Tags. <strong>Only 5 tags will be added.</strong>
+                    </Alert>
+                } */}
+                { hashTags &&
+                  hashTags.map((tag, i) => (
+                    <Chip
+                      className={classes.chip}
+                      icon={
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <line x1="7" y1="9" x2="24" y2="9"></line>
+                          <line x1="7" y1="15" x2="23" y2="15"></line>
+                          <line x1="13" y1="3" x2="11" y2="21"></line>
+                          <line x1="19" y1="3" x2="17" y2="21"></line>
+                        </svg>
+                      }
+                      label={tag}
+                      clickable
+                      color="primary"
+                      onDelete={() => handleDelete(i)}
+                      variant="outlined"
+                    />
+                  ))
+                }
               </Container>
+              <div className={classes.fgtbimg}>
+                <Button className={classes.fgtbimgButton}>
+                  <label className={classes.label} for="fgtbimgUpload">
+                    Choose Image
+                  </label>
+                </Button>
+                <input
+                  id="fgtbimgUpload"
+                  className={classes.fileUploadInput}
+                  type="file"
+                  accept=".jpg .jpeg .png"
+                  onChange={handleFgtbChange}
+                />
+                <Typography className={classes.fileName}>
+                  {fgtbImgName}
+                </Typography>
+              </div>
+              <div className={classes.optButtons}>
+                <Button className={classes.button} component={Link} to="/profile">
+                  Cancel
+                </Button>
+                <Button className={classes.button} type="submit" onClick={() => setFgtbData({ ...fgtbData, shared: true })}>
+                  Share
+                </Button>
+                <Button className={classes.button} type="submit">
+                  Save
+                </Button>
+              </div>
             </ThemeProvider>
           </Grid>
         </form>

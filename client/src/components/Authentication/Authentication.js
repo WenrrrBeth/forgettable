@@ -12,7 +12,7 @@ import {
 import { Alert } from "@material-ui/lab";
 import { GoogleLogin } from "react-google-login";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AUTH } from "../../constants/actiontypes";
@@ -33,6 +33,10 @@ const Authentication = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // useEffect(() => {
+
+  // }, [dispatch])
 
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });

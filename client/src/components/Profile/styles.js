@@ -27,9 +27,9 @@ const theme = makeStyles((theme) => ({
     position: "relative",
     objectFit: "fill",
     marginTop: "-50px",
-    marginLeft: "-5%",
-    width: "105%",
-    height: "85vh",
+    marginLeft: "-2%",
+    width: "107%",
+    height: "80vh",
     zIndex: 100,
   },
   bgimg: {
@@ -41,7 +41,6 @@ const theme = makeStyles((theme) => ({
     height: "70vh",
   },
   nameCard: {
-    fontFamily: "'Playfair Display', serif",
     display: "flex",
     flexDirection: "column",
     zIndex: 1100,
@@ -67,6 +66,7 @@ const theme = makeStyles((theme) => ({
     marginLeft: "15px",
   },
   name: {
+    fontFamily: "'Playfair Display', serif",
     marginTop: "20px",
   },
   controls: {
@@ -76,8 +76,10 @@ const theme = makeStyles((theme) => ({
     marginRight: "6px",
   },
   mind: {
+    fontFamily: "'Playfair Display', serif",
     lineHeight: "20px",
     margin: "0px 15px",
+    fontSize: "16px",
   },
 
   [theme.breakpoints.down("sm")]: {

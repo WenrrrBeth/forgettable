@@ -5,10 +5,23 @@ const postSchema = mongoose.Schema({
   title: String,
   content: String,
   tags: [String],
-  image: [String],
-  likes: {
+  image: {
+    filename: {
       type: String,
-      default: [],
+      default: "",
+    },
+    filetype: {
+      type: String,
+      default: "",
+    },
+    data: {
+      type: String,
+      default: "",
+    },
+  },
+  saves: {
+      type: Number,
+      default: 0,
   },
   createdAt: {
       type: Date,

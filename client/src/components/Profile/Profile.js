@@ -89,7 +89,7 @@ const Profile = () => {
                 {profile?.name ? profile?.name : "Name"}
               </Typography>
               <div className={classes.controls}>
-                <IconButton>
+                <IconButton component={Link} to="/write">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -147,7 +147,7 @@ const Profile = () => {
             <CardContent className={classes.userContent}>
               <Typography
                 className={classes.mind}
-                variant="subtitle1"
+                variant="h6"
                 color="textSecondary"
               >
                 {profile?.mind
