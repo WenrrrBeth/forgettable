@@ -5,7 +5,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import fs from "fs";
 
-import profileRoutes from "./routes/profile.js"
+import profileRoutes from "./routes/profile.js";
+import forgettableRoutes from "./routes/post.js";
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })) // setting up 
 app.use(cors()) // for cross origin req
 
 app.use("/profile", profileRoutes);
+app.use("/forgettable", forgettableRoutes);
 
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = process.env.CONNECTION_URL;

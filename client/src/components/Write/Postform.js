@@ -9,12 +9,16 @@ import {
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { postEvent } from "../../actions/post";
 import useStyles from "./styles";
 import "../../fonts.css";
 
 const Postform = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [hashTags, setHashTags] = useState([]);
   const [fgtbData, setFgtbData] = useState({
     by: "",
@@ -25,7 +29,28 @@ const Postform = () => {
     shared: false,
   });
   const [fgtbImgName, setFgtbImgName] = useState("No files choosen.");
-  const handleSubmit = () => {};
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const clearData = () => {
+    setFgtbData({
+      by: "",
+      title: "",
+      content: "",
+      tags: [],
+      image: { filename: "", filetype: "", data: "" },
+      shared: false,
+    });
+    setHashTags([])
+    setFgtbImgName("No files choosen.")
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(
+      postEvent({ ...fgtbData, by: user?.result?._id }, history)
+    );
+    clearData();
+  };
 
   const theme = createMuiTheme({
     palette: {
@@ -34,8 +59,6 @@ const Postform = () => {
       },
     },
   });
-
-  const handleChange = (e) => {};
 
   const handleDelete = (didx) => {
     setHashTags([ ...hashTags.filter((_, idx) => idx!==didx)])
@@ -125,9 +148,8 @@ const Postform = () => {
                 label="Tags (separate by space)"
                 onChange={handleTagChange}
                 variant="filled"
-                required
               />
-              <Container classNmae={classes.hashtag}>
+              <Container className={classes.hashtag}>
                 {/* { hashTags.length > 5 &&
                     <Alert severity="warning">
                       <AlertTitle>Warning</AlertTitle>
@@ -175,7 +197,7 @@ const Postform = () => {
                   id="fgtbimgUpload"
                   className={classes.fileUploadInput}
                   type="file"
-                  accept=".jpg .jpeg .png"
+                  accept=".jpg, .jpeg, .png"
                   onChange={handleFgtbChange}
                 />
                 <Typography className={classes.fileName}>

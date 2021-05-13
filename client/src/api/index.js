@@ -27,3 +27,5 @@ export const signin = (inputData) => API.post("/profile/signin", inputData);
 export const signup = (inputData) => API.post("/profile/signup", inputData);
 export const updateProfile = (id, updatedData) => API.patch(`/profile/${id}`, updatedData);
 export const getProfile = (id) => API.get(`/profile/${id}`);
+
+export const postevent = (inputData) => API.post("/forgettable", inputData);

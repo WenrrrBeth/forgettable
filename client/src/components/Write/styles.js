@@ -31,7 +31,7 @@ const theme = makeStyles({
     },
     chip: {
         marginRight: "10px",
-        marginTop: "10px",
+        marginBottom: "10px",
     },
     fgtbimg: {
         display: "flex",
