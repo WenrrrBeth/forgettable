@@ -13,12 +13,46 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
 import useStyles from "./styles.js";
+import { withStyles } from "@material-ui/core/styles";
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import { LOGOUT } from "../../constants/actiontypes";
 import { getProfile } from "../../actions/profile";
+import { getUnsharedPosts, getSharedPosts } from "../../actions/post";
 import bgimg from "../../designs/bgimg_defaultDesign.png";
 import bgimgBorder from "../../designs/bgimg_BorderDesign.PNG";
 import profileimg from "../../designs/profile_default.jpeg";
+import Gridposts from "./GridPosts/Gridposts";
+import Detailposts from "./DetailPosts/Detailposts";
 import "../../fonts.css";
+
+const AntTabs = withStyles({
+  root: {
+    borderBottom: '1px solid #DBDBDB',
+  },
+  indicator: {
+    backgroundColor: '#3EA3B0'
+  }
+})(Tabs);
+
+const AntTab = withStyles((theme) => ({
+  root: {
+    fontFamily: "'Playfair Display', serif",
+    color: "gray",
+    "&:hover" : {
+      color: "#3EA3B0",
+      opacity: 1,
+    },
+    "&$selected" : {
+      color: "#1890ff",
+    },
+    "&:focus": {
+      color: "#3EA3B0",
+    },
+    fontWeight: theme.typography.fontWeightMedium,
+    fontSize: theme.typography.pxToRem(17),
+  }
+}))((props) => <Tab disableRipple {...props} />);
 
 const Profile = () => {
   const classes = useStyles();
@@ -29,10 +63,17 @@ const Profile = () => {
   const location = useLocation();
 
   useEffect(() => {
+      console.log("useEffect")
       dispatch(getProfile(user.result._id));
-  }, [user.result._id, dispatch]);
+      dispatch(getUnsharedPosts(user.result._id));
+      dispatch(getSharedPosts(user.result._id));
+      // dispatch(getSavedPost(user.result._id));
+  }, [location, user.result._id, dispatch]);
 
   const profile = useSelector((state) => state.profile);
+  const unsharedPosts = useSelector((state) => state.unshared);
+  const sharedPosts = useSelector((state) => state.shared);
+  const savedPosts = null;
 
   const logout = () => {
     dispatch({ type: LOGOUT });
@@ -48,6 +89,31 @@ const Profile = () => {
   //     }
   //     setUser(JSON.parse(localStorage.getItem('profile')));
   //   }, [location])
+
+  const handleTabChange = (e, newValue) => {
+    setSubNav(newValue);
+  }
+
+  const DisplayOpt = () => {
+    if (subNav===0) {
+      // detailed personal posts prop
+      console.log(unsharedPosts);
+      return (
+        <Detailposts posts={unsharedPosts}/>
+      )
+    } else if (subNav === 1) {
+      // detailed shared posts prop
+      console.log(sharedPosts);
+      return (
+        <Detailposts posts={sharedPosts} />
+      )
+    } else {
+      // saved posts from home
+      return (
+        <Gridposts posts={savedPosts} />
+      )
+    }
+  }
 
   return (
     <Container className={classes.profileContainer}>
@@ -157,6 +223,14 @@ const Profile = () => {
             </CardContent>
           </div>
         </Card>
+        <div className={classes.subNav}>
+          <AntTabs value={subNav} onChange={handleTabChange}>
+            <AntTab label="Personal" />
+            <AntTab label="Shared" />
+            <AntTab label="Saved" />
+          </AntTabs>
+        </div>
+        <DisplayOpt className={classes.subComponent}/>
       </Grid>
     </Container>
   );

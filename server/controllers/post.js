@@ -3,9 +3,7 @@ import Forgettable from "../models/forgettable.js";
 import Profile from "../models/profile.js";
 
 export const postevent = async (req, res) => {
-    const { _id: id } = req.params; 
     const forgettable = req.body;
-    const { by, shared } = req.body;
 
     try {
         // for profile that matches by
@@ -14,27 +12,48 @@ export const postevent = async (req, res) => {
         // else if shared post is true:
         // profile.personal = [...profile.personal, forgettable._id]
         // profile.shared = [...profile.personal, forgettable._id]
-        const _pid = mongoose.mongo.ObjectId(by);
-        const poster = await Profile.findById({ _pid });
-        const newFgtb = new Forgettable({ ...forgettable, createdAt: new Date().toISOString(), id });
+        // const poster = await Profile.findOne({ by });
+        // console.log(by);
+        // if (!poster) console.log("Cannot find profile.");
 
-        if (!poster) res.states(404).send("No profile with that id.");
+        const newFgtb = new Forgettable({ ...forgettable, createdAt: new Date().toISOString() });
+        // const fgtb = await Forgettable.create({ ...forgettable, createdAt: new Date().toISOString()});
+        // res.status(200).json(fgtb);
 
-        if (shared) {
-            poster.personal = [ ...poster.personal, id ];
-            poster.shared = [ ...poster.shared, id ];
-        } else {
-            poster.personal = [ ...poster.personal, id ];
-        }
-        
-        await poster.save();
-        res.json(poster);
+        // if (shared) {
+        //     poster.personal = [ ...poster.personal, fgtb._id ];
+        //     poster.shared = [ ...poster.shared, fgtb._id ];
+        // } else {
+        //     poster.personal = [ ...poster.personal, fgtb._id ];
+        // }
 
         await newFgtb.save();
-        res.status(201).json(newFgtb);
+        res.status(201).json({ newFgtb })
     } catch (error) {
         console.log("Error in postEvent:")
         console.log(error);
         res.status(409).json({ message: error.message })
+    }
+}
+
+export const getUnsharedPosts = async (req, res) => {
+    const { id: _id } = req.params;
+    try {
+        const unsharedFgtb = await Forgettable.find({ by: _id, shared: false });
+        res.status(200).json(unsharedFgtb);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const getSharedPosts = async (req, res) => {
+    const { id: _id } = req.params;
+    try {
+        const sharedFgtb = await Forgettable.find({ by: _id, shared: true });
+        res.status(200).json(sharedFgtb);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
     }
 }

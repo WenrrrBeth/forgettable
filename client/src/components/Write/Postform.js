@@ -47,7 +47,7 @@ const Postform = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(
-      postEvent({ ...fgtbData, by: user?.result?._id }, history)
+      postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags }, history)
     );
     clearData();
   };

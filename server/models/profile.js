@@ -48,8 +48,8 @@ const profileSchema = mongoose.Schema({
       default: "",
     }
   },
-  personal: [String],
-  shared: [String],
+  // personal: [String],
+  // shared: [String],
   saved: [String],
 });
 

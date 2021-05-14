@@ -81,6 +81,12 @@ const theme = makeStyles((theme) => ({
     margin: "0px 15px",
     fontSize: "16px",
   },
+  subNav: {
+    marginTop: "70px",
+  },
+  subComponent: {
+
+  },
 
   [theme.breakpoints.down("sm")]: {
     bgimg: {

@@ -29,3 +29,5 @@ export const updateProfile = (id, updatedData) => API.patch(`/profile/${id}`, up
 export const getProfile = (id) => API.get(`/profile/${id}`);
 
 export const postevent = (inputData) => API.post("/forgettable", inputData);
+export const getUnsharedPosts = (id) => API.get(`/forgettable/${id}/unshared`);
+export const getSharedPosts = (id) => API.get(`/forgettable/${id}/shared`);
