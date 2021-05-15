@@ -57,3 +57,14 @@ export const getSharedPosts = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+export const getAllSharedPosts = async (req, res) => {
+    try {
+        const allSharedFgtbs = await Forgettable.find({ shared: true });
+        res.status(200).json(allSharedFgtbs);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+}
+

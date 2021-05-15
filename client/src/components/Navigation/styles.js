@@ -4,6 +4,7 @@ const theme = makeStyles({
   appBar: {
     display: "flex",
     flexDirection: "row",
+    zIndex: 11000,
   },
   brandName: {
     marginLeft: "20px",

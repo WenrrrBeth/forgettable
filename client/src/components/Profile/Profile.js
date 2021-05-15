@@ -14,8 +14,8 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
 import useStyles from "./styles.js";
 import { withStyles } from "@material-ui/core/styles";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import { LOGOUT } from "../../constants/actiontypes";
 import { getProfile } from "../../actions/profile";
 import { getUnsharedPosts, getSharedPosts } from "../../actions/post";
@@ -28,22 +28,22 @@ import "../../fonts.css";
 
 const AntTabs = withStyles({
   root: {
-    borderBottom: '1px solid #DBDBDB',
+    borderBottom: "1px solid #DBDBDB",
   },
   indicator: {
-    backgroundColor: '#3EA3B0'
-  }
+    backgroundColor: "#3EA3B0",
+  },
 })(Tabs);
 
 const AntTab = withStyles((theme) => ({
   root: {
     fontFamily: "'Playfair Display', serif",
     color: "gray",
-    "&:hover" : {
+    "&:hover": {
       color: "#3EA3B0",
       opacity: 1,
     },
-    "&$selected" : {
+    "&$selected": {
       color: "#1890ff",
     },
     "&:focus": {
@@ -51,7 +51,7 @@ const AntTab = withStyles((theme) => ({
     },
     fontWeight: theme.typography.fontWeightMedium,
     fontSize: theme.typography.pxToRem(17),
-  }
+  },
 }))((props) => <Tab disableRipple {...props} />);
 
 const Profile = () => {
@@ -63,12 +63,11 @@ const Profile = () => {
   const location = useLocation();
 
   useEffect(() => {
-      console.log("useEffect")
-      dispatch(getProfile(user.result._id));
-      dispatch(getUnsharedPosts(user.result._id));
-      dispatch(getSharedPosts(user.result._id));
-      // dispatch(getSavedPost(user.result._id));
-  }, [location, user.result._id, dispatch]);
+    dispatch(getProfile(user?.result?._id));
+    dispatch(getUnsharedPosts(user?.result?._id));
+    dispatch(getSharedPosts(user?.result?._id));
+    // dispatch(getSavedPost(user.result._id));
+  }, [user?.result?._id, dispatch]);
 
   const profile = useSelector((state) => state.profile);
   const unsharedPosts = useSelector((state) => state.unshared);
@@ -92,28 +91,20 @@ const Profile = () => {
 
   const handleTabChange = (e, newValue) => {
     setSubNav(newValue);
-  }
+  };
 
   const DisplayOpt = () => {
-    if (subNav===0) {
+    if (subNav === 0) {
       // detailed personal posts prop
-      console.log(unsharedPosts);
-      return (
-        <Detailposts posts={unsharedPosts}/>
-      )
+      return <Detailposts posts={unsharedPosts} />;
     } else if (subNav === 1) {
       // detailed shared posts prop
-      console.log(sharedPosts);
-      return (
-        <Detailposts posts={sharedPosts} />
-      )
+      return <Detailposts posts={sharedPosts} />;
     } else {
       // saved posts from home
-      return (
-        <Gridposts posts={savedPosts} />
-      )
+      return <Gridposts posts={savedPosts} />;
     }
-  }
+  };
 
   return (
     <Container className={classes.profileContainer}>
@@ -129,11 +120,7 @@ const Profile = () => {
           />
           <img
             className={classes.bgimg}
-            src={
-              profile?.bgimg?.filename
-                ? profile?.bgimg.data
-                : bgimg
-            }
+            src={profile?.bgimg?.filename ? profile?.bgimg.data : bgimg}
             alt="default background image design"
           />
         </div>
@@ -230,7 +217,7 @@ const Profile = () => {
             <AntTab label="Saved" />
           </AntTabs>
         </div>
-        <DisplayOpt className={classes.subComponent}/>
+        <DisplayOpt className={classes.subComponent} />
       </Grid>
     </Container>
   );
