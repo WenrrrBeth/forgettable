@@ -18,7 +18,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { LOGOUT } from "../../constants/actiontypes";
 import { getProfile } from "../../actions/profile";
-import { getUnsharedPosts, getSharedPosts } from "../../actions/post";
+import { getUnsharedPosts, getSharedPosts, getSavedPost } from "../../actions/post";
 import bgimg from "../../designs/bgimg_defaultDesign.png";
 import bgimgBorder from "../../designs/bgimg_BorderDesign.PNG";
 import profileimg from "../../designs/profile_default.jpeg";
@@ -60,19 +60,18 @@ const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
 
   useEffect(() => {
     dispatch(getProfile(user?.result?._id));
     dispatch(getUnsharedPosts(user?.result?._id));
     dispatch(getSharedPosts(user?.result?._id));
-    // dispatch(getSavedPost(user.result._id));
+    dispatch(getSavedPost(user.result._id));
   }, [user?.result?._id, dispatch]);
 
   const profile = useSelector((state) => state.profile);
   const unsharedPosts = useSelector((state) => state.unshared);
   const sharedPosts = useSelector((state) => state.shared);
-  const savedPosts = null;
+  const savedPosts = useSelector((state) => state.saved);
 
   const logout = () => {
     dispatch({ type: LOGOUT });
@@ -99,10 +98,10 @@ const Profile = () => {
       return <Detailposts posts={unsharedPosts} />;
     } else if (subNav === 1) {
       // detailed shared posts prop
-      return <Detailposts posts={sharedPosts} />;
+      return <Detailposts posts={sharedPosts} shared />;
     } else {
       // saved posts from home
-      return <Gridposts posts={savedPosts} />;
+      return <Gridposts posts={savedPosts} profile={profile} />;
     }
   };
 

@@ -50,7 +50,7 @@ const profileSchema = mongoose.Schema({
   },
   // personal: [String],
   // shared: [String],
-  saved: [String],
+  // saved: [String],
 });
 
 const Profile = mongoose.model("Profile", profileSchema);

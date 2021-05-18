@@ -9,9 +9,27 @@ const theme = makeStyles({
     justifyContent: "space-around",
     overflow: "hidden",
   },
+  loadSktRow: {
+    display: "flex",
+    flexDirection: "row",
+    wrap: "wrap",
+    gap: "10px",
+    marginBottom: "10px",
+  },
+  loadSktCol: {
+    diplay: "flex",
+    flexDirection: "column",
+  },
+  header: {
+    display: "flex",
+    flexDirection: "column",
+    alignSelf: "center",
+    width: "100%"
+  },
   homeTitle: {
     fontFamily:"'Abril Fatface', cursive",
     marginBottom: "25px",
+    alignSelf: "center",
   },
   bar: {
     fontFamily: "'Playfair Display', serif",

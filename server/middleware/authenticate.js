@@ -9,10 +9,10 @@ const authenticate = async (req, res, next) => {
 
         if(token && customAuth) {
             decodedPayload = jwt.verify(token, process.env.JWT_SECRET); // decoded payload 
-            req.userId = decodedPayload?.id;
+            req.profileId = decodedPayload?.id;
         } else {
             signature = jwt.decode(token); // decoded payload without varified signature
-            req.userId = decodedPayload?.sub;
+            req.profileId = decodedPayload?.sub;
         }
         next();
     } catch (error) {

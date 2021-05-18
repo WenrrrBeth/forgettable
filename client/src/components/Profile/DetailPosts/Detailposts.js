@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import useStyles from "./styles";
 import Detailpost from "./DetailPost/Detailpost";
 
-const Detailposts = (posts) => {
+const Detailposts = ({ posts, shared }) => {
   const classes = useStyles();
 
   return (
     <Container className={classes.personalContainer}>
-      {posts.posts.map((post) => (
-        <Detailpost post={post} />
+      {posts.map((post) => (
+        <Detailpost post={post} shared={shared}/>
       ))}
     </Container>
   );

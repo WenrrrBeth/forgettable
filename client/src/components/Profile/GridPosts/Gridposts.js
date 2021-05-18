@@ -1,68 +1,50 @@
-import { Chip, Container, Grid, Typography } from "@material-ui/core";
-import React from "react";
+import {
+  Container,
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile, updateProfile } from "../../../actions/profile";
+import { getAllSharedPosts, updatePost } from "../../../actions/post";
 import useStyles from "./styles";
+import "../../../fonts.css";
 
-const Gridposts = (posts) => {
+const Gridposts = ({ posts, profile }) => {
   const classes = useStyles();
+  const colSize = [2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1];
 
-  if (posts) {
-    return (
-      <Container className={classes.personalContainer}>
-        <Grid container className={classes.personalGrid}>
-          <Typography variant="subtitle1" className={classes.time}>
-            {posts.createdAt}
-          </Typography>
-          <Grid container className={classes.detailGrid}>
-            {posts.map((post) => {
-              return (
-                <>
-                  <Typography className={classes.title} variant="h6">
-                    {post.title}
-                  </Typography>
-                  <Typography className={classes.detail} variant="subtitle1">
-                    {post.content}
-                  </Typography>
-                  <img
-                    className={classes.image}
-                    src={post.image.data}
-                    alt="post image"
-                  />
-                  {posts.tags.map((tag) => (
-                    <Chip
-                      className={classes.chip}
-                      icon={
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <line x1="7" y1="9" x2="24" y2="9"></line>
-                          <line x1="7" y1="15" x2="23" y2="15"></line>
-                          <line x1="13" y1="3" x2="11" y2="21"></line>
-                          <line x1="19" y1="3" x2="17" y2="21"></line>
-                        </svg>
-                      }
-                      label={tag}
-                      color="primary"
-                      variant="outlined"
-                    />
-                  ))}
-                </>
-              );
-            })}
-          </Grid>
-        </Grid>
-      </Container>
-    );
-  } else {
-    return <Typography>Posts is null</Typography>;
-  }
+  return (
+    <Container className={classes.homeContainer}>
+      <GridList
+        cellHeight={300}
+        spacing={5}
+        className={classes.gridList}
+        cols={3}
+      >
+        {posts.map((post, index) => (
+          <GridListTile
+            key={post?._id}
+            cols={
+              index < 12
+                ? colSize[index]
+                : colSize[index - 12 * Math.round(index / 12)]
+            }
+          >
+            <img src={post?.image.data} alt={post?.title} />
+            <GridListTileBar
+              className={classes.bar}
+              title={post?.title}
+              titlePosition="bottom"
+            />
+          </GridListTile>
+        ))}
+      </GridList>
+    </Container>
+  );
 };
 
 export default Gridposts;

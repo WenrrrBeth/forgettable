@@ -19,10 +19,7 @@ const postSchema = mongoose.Schema({
       default: "",
     },
   },
-  saves: {
-      type: Number,
-      default: 0,
-  },
+  saves: [],
   createdAt: {
       type: Date,
       default: new Date(),

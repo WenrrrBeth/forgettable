@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core";
 
 const theme = makeStyles({
     personalGrid: {
@@ -28,9 +28,30 @@ const theme = makeStyles({
         display: "flex",
         flexDirection: "column",
     },
+    firstLine: {
+        display: "flex",
+        flexDirection: "row",
+    },
     title: {
         fontFamily: "'Abril Fatface', cursive",
         marginBottom: "10px",
+    },
+    saveCount: {
+        width: "75px",
+        display: "flex",
+        alignItems: "center",
+        alignSelf: "flex-start",
+        marginRight: "0px",
+        flexDirection: "row",
+    },
+    countNum: {
+        fontFamily: "'Playfair Display', serif",
+        fontWeight: "300",
+        color: "gray",
+        fontSize: "20px",
+    },
+    saveIcon: {
+        width: "30px",
     },
     detail: {
         fontFamily: "'Playfair Display', serif",

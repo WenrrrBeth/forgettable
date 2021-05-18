@@ -68,3 +68,29 @@ export const getAllSharedPosts = async (req, res) => {
     }
 }
 
+export const updatePost = async (req, res) => {
+    const { pid: _id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found");
+
+    const post = req.body;
+
+    const updatePost = await Forgettable.findByIdAndUpdate(
+        _id,
+        post,
+        {new: true}
+    )
+
+    res.json(updatePost);
+}
+
+export const getSavedPost = async (req, res) => {
+    const { id: _id } = req.params;
+    try {
+        const savedFgtb = await Forgettable.find({ saves: _id });
+        res.status(200).json(savedFgtb);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+}

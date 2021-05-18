@@ -1,4 +1,4 @@
-import { AUTH, UPDATE, FETCH_ONE } from "../constants/actiontypes";
+import { AUTH, UPDATE, FETCH_ONE, ADD_SAVE } from "../constants/actiontypes";
 import * as api from "../api/index";
 
 export const signin = (inputData, history) => async (dispatch) => {
@@ -39,3 +39,4 @@ export const getProfile = (id) => async (dispatch) => {
         console.log(error);
     }
 }
+

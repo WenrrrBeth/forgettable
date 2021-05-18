@@ -5,11 +5,14 @@ import {
   GridListTileBar,
   IconButton,
   Typography,
+  CircularProgress,
+  LinearProgress,
 } from "@material-ui/core";
+import { Skeleton } from '@material-ui/lab';
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfile, addSavePost } from "../../actions/profile";
-import { getAllSharedPosts, savePost } from "../../actions/post";
+import { getProfile, updateProfile } from "../../actions/profile";
+import { getAllSharedPosts, updatePost } from "../../actions/post";
 import useStyles from "./styles";
 import "../../fonts.css";
 
@@ -17,26 +20,58 @@ const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
-  const [click, setClick] = useState(false);
+  const [loading, setLoading] = useState(false);
   const colSize = [2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1]
 
+  const profile = useSelector((state) => state.profile)
+  const posts = useSelector((state) => state.forgettable);
+
   useEffect(() => {
-    if(user?.result._id) {
+    if(user?.result?._id) {
         dispatch(getProfile(user?.result._id));
     }
     dispatch(getAllSharedPosts());
-  }, [user?.result?._id, dispatch]);
+    posts[0]?.title ? setLoading(false) : setLoading(true);
+  }, [user?.result?._id, dispatch, posts]);
 
-  const posts = useSelector((state) => state.forgettable);
-
-  const handleClick = (pid) => {
-    dispatch(savePost(pid));
-    dispatch(addSavePost(user?.result?._id));
+  const handleClick = (post) => {
+    if (post.saves.includes(profile?._id)) {
+      dispatch(
+        updatePost(post._id, { ...post, saves: post.saves.filter((pid) => (pid !== profile?._id))})
+      );
+    } else {
+      dispatch(
+        updatePost(post._id, {...post, saves: [...post.saves, profile?._id]})
+      );
+    }
   }
+
+  console.log(posts[0]?.title);
 
   return (
     <Container className={classes.homeContainer}>
-      <Typography className={classes.homeTitle} variant="h5">Home</Typography>
+      <div className={classes.header} >
+        <Typography className={classes.homeTitle} variant="h5">Home</Typography>
+        {loading && (
+          <div className={classes.loadSktCol}>
+            <div className={classes.loadSktRow}>
+              <Skeleton variant="rect" height={270} width={300}/>
+              <Skeleton variant="rect" height={270} width={300}/>
+              <Skeleton variant="rect" height={270} width={300}/>
+            </div>
+            <div className={classes.loadSktRow}>
+              <Skeleton variant="rect" height={270} width={300}/>
+              <Skeleton variant="rect" height={270} width={300}/>
+              <Skeleton variant="rect" height={270} width={300}/>
+            </div>
+            <div className={classes.loadSktRow}>
+              <Skeleton variant="rect" height={270} width={300}/>
+              <Skeleton variant="rect" height={270} width={300}/>
+              <Skeleton variant="rect" height={270} width={300}/>
+            </div>
+          </div>
+        )}
+      </div>
       <GridList cellHeight={300} spacing={5} className={classes.gridList} cols={3}>
         {posts.map((post, index) => (
           <GridListTile key={post?._id} cols={index<12 ? colSize[index] : colSize[(index-12*(Math.round(index/12)))]}>
@@ -50,14 +85,14 @@ const Home = () => {
                   actionIcon={
                     <IconButton
                       className={classes.saveIcon}
-                      onClick={handleClick(post?._id)}
+                      onClick={() => handleClick(post)}
                     >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
-                        fill={user?.result._id ? ("none") : "gray"}
+                        fill={user?.result._id ? (post?.saves.includes(user?.result?._id) ? "white" : "none") : "gray"}
                         stroke={user?.result._id ? "white" : "gray"}
                         strokeWidth="2"
                         strokeLinecap="round"

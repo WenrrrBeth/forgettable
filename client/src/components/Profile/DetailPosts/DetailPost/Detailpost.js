@@ -3,10 +3,9 @@ import React from "react";
 import useStyles from "./styles";
 import "../../../../fonts.css";
 
-const Detailpost = (post) => {
+const Detailpost = ({ post, shared }) => {
   const classes = useStyles();
-  const pt = post.post;
-  const creationDate = new Date(pt.createdAt);
+  const creationDate = new Date(post.createdAt);
   const date = creationDate.toDateString();
   const time = creationDate.toLocaleTimeString();
 
@@ -22,19 +21,42 @@ const Detailpost = (post) => {
       </Grid>
       <Card className={classes.detailCard} elevation={2}>
         <Grid container className={classes.detailGrid}>
-          <Typography className={classes.title} variant="h5">
-            {pt.title}
-          </Typography>
+          <div className={classes.firstLine}>
+            <Typography className={classes.title} variant="h5">
+              {post.title}
+            </Typography>
+            {
+              shared && (
+                <Container className={classes.saveCount}>
+                  <Typography className={classes.countNum}>{post.saves.length}</Typography>
+                  <svg
+                    className={classes.saveIcon}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="gray"
+                    stroke="gray"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </Container>
+              )
+            }
+          </div>
           <Typography className={classes.detail} variant="subtitle1">
-            {pt.content}
+            {post.content}
           </Typography>
           <img
             className={classes.image}
-            src={post.post.image.data}
+            src={post.image.data}
             alt="post image"
           />
           <Container className={classes.chips}>
-            {pt.tags.map((tag) => (
+            {post.tags.map((tag) => (
               <Chip
                 className={classes.chip}
                 icon={
