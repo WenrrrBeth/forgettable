@@ -33,6 +33,7 @@ const theme = makeStyles({
   },
   bar: {
     fontFamily: "'Playfair Display', serif",
+    fontSize: "15px",
     background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
     'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
@@ -47,6 +48,7 @@ const theme = makeStyles({
   },
   saveIcon: {
     marginRight: "0px",
+    width: "43px",
   }
 });
 

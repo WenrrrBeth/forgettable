@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useStyles from "./styles";
 import { updateProfile } from "../../actions/profile";
 import { getProfile } from "../../actions/profile";
+import Resizer from "react-image-file-resizer";
 import "../../fonts.css";
 
 const Settings = () => {
@@ -38,6 +39,24 @@ const Settings = () => {
     },
   });
 
+  const resizeFile = (file) => 
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        300,
+        300,
+        file.type,
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+    });
+  
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(
@@ -63,6 +82,7 @@ const Settings = () => {
     setProfileimg(e.target.files[0].name);
     toBase64(e.target.files[0])
       .then(result => {
+        console.log(result);
         setUserData({
           ...userData,
           profileimg: {
@@ -75,6 +95,22 @@ const Settings = () => {
       .catch(err => {
           console.log(err);
       });
+    try {
+      const file = e.target.files[0];
+      resizeFile(file)
+        .then(result => {
+          setUserData({
+            ...userData,
+            profileimg: {
+              filename: e.target.files[0].name,
+              filetype: e.target.files[0].type,
+              data: result,
+            }
+          })
+        })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleBgChange = (e) => {

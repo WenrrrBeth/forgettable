@@ -21,6 +21,16 @@ export const signup = (inputData, history) => async (dispatch) => {
     }
 }
 
+export const googleSignin = (inputData, history) => async (dispatch) => {
+    try {
+        const { data } = await api.googleSignin(inputData);
+        dispatch({type: AUTH, data});
+        history.push("/");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const updateProfile = (id, inputData, history) => async (dispatch) => {
     try {
         const { data } = await api.updateProfile(id, inputData);

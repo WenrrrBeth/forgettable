@@ -58,10 +58,25 @@ const theme = makeStyles({
         lineHeight: "20px",
         marginBottom: "20px",
     },
-    image: {
-        height: "40vh",
+    imageContainer: {
+        position: "relative",
+        top: 0,
+        left: 0,
+    },
+    imageOverlay: {
+        position: "relative",
+        objectFit: "fill",
+        height: "35vh",
         width: "100%",
+        zIndex: 100,
+    },
+    image: {
+        height: "35vh",
+        width: "99%",
+        top: 0,
+        left: 1,
         objectFit: "cover",
+        position: "absolute",
         borderRadius: "10px",
     },
     chips: {

@@ -1,6 +1,7 @@
 import { Chip, Container, Grid, Typography, Card } from "@material-ui/core";
 import React from "react";
 import useStyles from "./styles";
+import bgimgBorder from "../../../../designs/bgimg_BorderDesign6.png";
 import "../../../../fonts.css";
 
 const Detailpost = ({ post, shared }) => {
@@ -50,11 +51,18 @@ const Detailpost = ({ post, shared }) => {
           <Typography className={classes.detail} variant="subtitle1">
             {post.content}
           </Typography>
-          <img
-            className={classes.image}
-            src={post.image.data}
-            alt="post image"
-          />
+          <div className={classes.imageContainer} >
+            <img
+              className={classes.imageOverlay}
+              src={bgimgBorder}
+              alt="background image border design"
+            />
+            <img
+              className={classes.image}
+              src={post.image.data}
+              alt="post image"
+            />
+          </div>
           <Container className={classes.chips}>
             {post.tags.map((tag) => (
               <Chip

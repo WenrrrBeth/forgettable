@@ -6,31 +6,10 @@ export const postevent = async (req, res) => {
     const forgettable = req.body;
 
     try {
-        // for profile that matches by
-        // if shared is false:
-        // profile.personal = [...profile.personal, forgettable._id]
-        // else if shared post is true:
-        // profile.personal = [...profile.personal, forgettable._id]
-        // profile.shared = [...profile.personal, forgettable._id]
-        // const poster = await Profile.findOne({ by });
-        // console.log(by);
-        // if (!poster) console.log("Cannot find profile.");
-
         const newFgtb = new Forgettable({ ...forgettable, createdAt: new Date().toISOString() });
-        // const fgtb = await Forgettable.create({ ...forgettable, createdAt: new Date().toISOString()});
-        // res.status(200).json(fgtb);
-
-        // if (shared) {
-        //     poster.personal = [ ...poster.personal, fgtb._id ];
-        //     poster.shared = [ ...poster.shared, fgtb._id ];
-        // } else {
-        //     poster.personal = [ ...poster.personal, fgtb._id ];
-        // }
-
         await newFgtb.save();
         res.status(201).json({ newFgtb })
     } catch (error) {
-        console.log("Error in postEvent:")
         console.log(error);
         res.status(409).json({ message: error.message })
     }

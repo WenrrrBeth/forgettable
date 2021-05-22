@@ -25,6 +25,7 @@ API.interceptors.request.use((req) => {
 
 export const signin = (inputData) => API.post("/profile/signin", inputData);
 export const signup = (inputData) => API.post("/profile/signup", inputData);
+export const googleSignin = (inputData) => API.post("profile/googlesignin", inputData);
 export const updateProfile = (id, updatedData) => API.patch(`/profile/${id}`, updatedData);
 export const getProfile = (id) => API.get(`/profile/${id}`);
 

@@ -62,13 +62,14 @@ const Profile = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getProfile(user?.result?._id));
-    dispatch(getUnsharedPosts(user?.result?._id));
-    dispatch(getSharedPosts(user?.result?._id));
-    dispatch(getSavedPost(user.result._id));
+    dispatch(getProfile(user?.result?._id ? user?.result?._id : user?.result?.googleId));
+    dispatch(getUnsharedPosts(user?.result?._id ? user?.result?._id : user?.result?.googleId));
+    dispatch(getSharedPosts(user?.result?._id ? user?.result?._id : user?.result?.googleId));
+    dispatch(getSavedPost(user?.result?._id ? user?.result?._id : user?.result?.googleId));
   }, [user?.result?._id, dispatch]);
 
   const profile = useSelector((state) => state.profile);
+  console.log(profile);
   const unsharedPosts = useSelector((state) => state.unshared);
   const sharedPosts = useSelector((state) => state.shared);
   const savedPosts = useSelector((state) => state.saved);

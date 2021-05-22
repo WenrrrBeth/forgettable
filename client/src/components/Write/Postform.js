@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { postEvent } from "../../actions/post";
 import useStyles from "./styles";
+import Resizer from "react-image-file-resizer";
 import "../../fonts.css";
 
 const Postform = () => {
@@ -83,22 +84,54 @@ const Postform = () => {
     });
   };
 
+  const resizeFile = (file) => 
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      200``,
+      150,
+      file.type,
+      100,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "base64"
+    );
+  });
+
   const handleFgtbChange = (e) => {
     setFgtbImgName(e.target.files[0].name);
-    toBase64(e.target.files[0])
-      .then((result) => {
-        setFgtbData({
-          ...fgtbData,
-          image: {
-            filename: e.target.files[0].name,
-            filetype: e.target.files[0].type,
-            data: result,
-          },
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // toBase64(e.target.files[0])
+    //   .then((result) => {
+    //     setFgtbData({
+    //       ...fgtbData,
+    //       image: {
+    //         filename: e.target.files[0].name,
+    //         filetype: e.target.files[0].type,
+    //         data: result,
+    //       },
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    try {
+      const file = e.target.files[0];
+      resizeFile(file)
+        .then(result => {
+          setFgtbData({
+            ...fgtbData,
+            image: {
+              filename: e.target.files[0].name,
+              filetype: e.target.files[0].type,
+              data: result,
+            }
+          })
+        })
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

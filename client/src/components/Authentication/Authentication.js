@@ -16,7 +16,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AUTH } from "../../constants/actiontypes";
-import { signin, signup } from "../../actions/profile";
+import { signin, signup, googleSignin } from "../../actions/profile";
 import useStyles from "./styles";
 import "../../fonts.css";
 
@@ -52,17 +52,15 @@ const Authentication = () => {
   };
 
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
+    const profileInfo = res?.profileObj;
     const token = res?.tokenId;
 
     try {
-      dispatch({
-        type: AUTH,
-        data: {
-          result,
-          token,
-        },
-      });
+      const inputData = {
+        profileInfo,
+        token
+      }
+      dispatch(googleSignin(inputData, history));
       history.push("/profile");
     } catch (error) {
       console.log(error);
