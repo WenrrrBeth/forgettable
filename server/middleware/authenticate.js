@@ -11,7 +11,7 @@ const authenticate = async (req, res, next) => {
             decodedPayload = jwt.verify(token, process.env.JWT_SECRET); // decoded payload 
             req.profileId = decodedPayload?.id;
         } else {
-            signature = jwt.decode(token); // decoded payload without varified signature
+            decodedPayload = jwt.decode(token); // decoded payload without varified signature
             req.profileId = decodedPayload?.sub;
         }
         next();
