@@ -3,11 +3,11 @@ import { postevent, getUnsharedPosts, getSharedPosts, getAllSharedPosts, updateP
 import authenticate from "../middleware/authenticate.js";
 
 const router = express.Router();
-router.post("/", postevent);
+router.post("/", authenticate, postevent);
 router.get("/:id/unshared", getUnsharedPosts);
 router.get("/:id/shared", getSharedPosts);
 router.get("/shares", getAllSharedPosts);
-router.patch("/:pid", updatePost);
+router.patch("/:pid", authenticate, updatePost);
 router.get("/:id/saved", getSavedPost);
 
 export default router;

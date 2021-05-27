@@ -60,6 +60,7 @@ const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getProfile(user?.result?._id ? user?.result?._id : user?.result?.googleId));
@@ -80,14 +81,15 @@ const Profile = () => {
     setUser(null);
   };
 
-  //   useEffect(() => {
-  //     const token = user?.token;
-  //     if (token) {
-  //         const decodedToken = decode(token);
-  //         if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-  //     }
-  //     setUser(JSON.parse(localStorage.getItem('profile')));
-  //   }, [location])
+  useEffect(() => {
+    const token = user?.token;
+    if (token) {
+        const decodedToken = decode(token);
+        console.log("decodedToken: ", decodedToken);
+        if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [location])
 
   const handleTabChange = (e, newValue) => {
     setSubNav(newValue);

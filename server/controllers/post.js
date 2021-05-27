@@ -4,6 +4,7 @@ import Profile from "../models/profile.js";
 
 export const postevent = async (req, res) => {
     const forgettable = req.body;
+    console.log("profileId from middleware controller:", req.profileId)
 
     try {
         const newFgtb = new Forgettable({ ...forgettable, createdAt: new Date().toISOString() });
@@ -49,6 +50,7 @@ export const getAllSharedPosts = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     const { pid: _id } = req.params;
+    console.log("profileId from middleware controller:", req.profileId)
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found");
 
