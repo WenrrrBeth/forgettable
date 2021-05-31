@@ -7,7 +7,7 @@ import {
   Card,
   IconButton,
 } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
@@ -61,34 +61,39 @@ const Profile = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const logout = useCallback(() => {
+    dispatch({ type: LOGOUT });
+    history.push("/profile/authenticate");
+    setUser(null);
+  }, [dispatch, history]);
+
   useEffect(() => {
     dispatch(getProfile(user?.result?._id ? user?.result?._id : user?.result?.googleId));
     dispatch(getUnsharedPosts(user?.result?._id ? user?.result?._id : user?.result?.googleId));
     dispatch(getSharedPosts(user?.result?._id ? user?.result?._id : user?.result?.googleId));
     dispatch(getSavedPost(user?.result?._id ? user?.result?._id : user?.result?.googleId));
-  }, [user?.result?._id, dispatch]);
+
+    const token = user?.token;
+    if (token) {
+        const decodedToken = decode(token);
+        if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [user?.result?._id, user?.result?.googleId, dispatch, location, user?.token, logout]);
 
   const profile = useSelector((state) => state.profile);
-  console.log(profile);
   const unsharedPosts = useSelector((state) => state.unshared);
   const sharedPosts = useSelector((state) => state.shared);
   const savedPosts = useSelector((state) => state.saved);
 
-  const logout = () => {
-    dispatch({ type: LOGOUT });
-    history.push("/profile/authenticate");
-    setUser(null);
-  };
-
-  useEffect(() => {
-    const token = user?.token;
-    if (token) {
-        const decodedToken = decode(token);
-        console.log("decodedToken: ", decodedToken);
-        if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-    }
-    setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [location])
+  // useEffect(() => {
+  //   const token = user?.token;
+  //   if (token) {
+  //       const decodedToken = decode(token);
+  //       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+  //   }
+  //   setUser(JSON.parse(localStorage.getItem('profile')));
+  // }, [location])
 
   const handleTabChange = (e, newValue) => {
     setSubNav(newValue);
@@ -127,12 +132,12 @@ const Profile = () => {
           <img
             className={classes.bgimgOverlay}
             src={bgimgBorder}
-            alt="background image border design"
+            alt=""
           />
           <img
             className={classes.bgimg}
             src={profile?.bgimg?.filename ? profile?.bgimg.data : bgimg}
-            alt="default background image design"
+            alt=""
           />
         </div>
         <Card className={classes.nameCard} elevation={0}>

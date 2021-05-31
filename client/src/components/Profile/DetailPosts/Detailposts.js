@@ -8,8 +8,8 @@ const Detailposts = ({ posts, shared }) => {
 
   return (
     <Container className={classes.personalContainer}>
-      {posts.map((post) => (
-        <Detailpost post={post} shared={shared}/>
+      {posts.map((post, idx) => (
+        <Detailpost key={idx} post={post} shared={shared}/>
       ))}
     </Container>
   );

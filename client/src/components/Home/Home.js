@@ -70,7 +70,7 @@ const Home = () => {
       <Container className={classes.gridPost}>
           {
             posts.map((post, index) => (
-              <div className={classes.imageCol}>
+              <div key={index} className={classes.imageCol}>
                 <img className={classes.image} src={post?.image.data} alt={post?.title} />
                 <Container className={classes.detailContainer}>
                   <Container className={classes.stretch}>

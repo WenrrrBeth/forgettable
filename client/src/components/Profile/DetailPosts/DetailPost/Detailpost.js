@@ -55,18 +55,19 @@ const Detailpost = ({ post, shared }) => {
             <img
               className={classes.imageOverlay}
               src={bgimgBorder}
-              alt="background image border design"
+              alt=""
             />
             <img
               className={classes.image}
               src={post.image.data}
-              alt="post image"
+              alt=""
             />
           </div>
           <Container className={classes.chips}>
-            {post.tags.map((tag) => (
+            {post.tags.map((tag, idx) => (
               <Chip
                 className={classes.chip}
+                key={idx}
                 icon={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

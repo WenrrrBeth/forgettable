@@ -221,7 +221,7 @@ const Postform = () => {
               </Container>
               <div className={classes.fgtbimg}>
                 <Button className={classes.fgtbimgButton}>
-                  <label className={classes.label} for="fgtbimgUpload">
+                  <label className={classes.label} htmlFor="fgtbimgUpload">
                     Choose Image
                   </label>
                 </Button>
