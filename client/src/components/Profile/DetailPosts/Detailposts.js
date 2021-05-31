@@ -1,5 +1,5 @@
-import { Chip, Container, Grid, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import { Container } from "@material-ui/core";
+import React from "react";
 import useStyles from "./styles";
 import Detailpost from "./DetailPost/Detailpost";
 

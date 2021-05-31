@@ -2,7 +2,6 @@ import {
   Container,
   Grid,
   Typography,
-  Paper,
   CardContent,
   CardMedia,
   Card,
@@ -98,13 +97,23 @@ const Profile = () => {
   const DisplayOpt = () => {
     if (subNav === 0) {
       // detailed personal posts prop
-      return <Detailposts posts={unsharedPosts} />;
+      if (unsharedPosts[0]) {
+        return <Detailposts posts={unsharedPosts} />;
+      }  
+      return <Typography className={classes.title}>You have no personal posts</Typography>;
+      // return <Detailposts posts={unsharedPosts} />;
     } else if (subNav === 1) {
       // detailed shared posts prop
-      return <Detailposts posts={sharedPosts} shared />;
+      if (sharedPosts[0]) {
+        return <Detailposts posts={sharedPosts} shared />;
+      }
+      return <Typography className={classes.title}>You have no shared posts</Typography>;
     } else {
       // saved posts from home
-      return <Gridposts posts={savedPosts} profile={profile} />;
+      if (savedPosts[0]) {
+        return <Gridposts posts={savedPosts} profile={profile} />;
+      }
+      return <Typography className={classes.title}>You have saved Posts</Typography>;
     }
   };
 

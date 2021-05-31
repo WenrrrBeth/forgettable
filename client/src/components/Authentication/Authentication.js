@@ -12,10 +12,9 @@ import {
 import { Alert } from "@material-ui/lab";
 import { GoogleLogin } from "react-google-login";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { AUTH } from "../../constants/actiontypes";
 import { signin, signup, googleSignin } from "../../actions/profile";
 import useStyles from "./styles";
 import "../../fonts.css";
@@ -24,6 +23,7 @@ const Authentication = () => {
   const classes = useStyles();
   const [login, setLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
   const [inputData, setInputData] = useState({
     email: "",
     preferredName: "",
@@ -34,19 +34,19 @@ const Authentication = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // useEffect(() => {
-
-  // }, [dispatch])
-
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrMsg(null);
     if (login) {
-      dispatch(signin(inputData, history));
+      dispatch(signin(inputData, history))
+        .then((msg) => msg && setTimeout(() => setErrMsg(msg), 10));
     } else {
+      if (!inputData.email.split('').includes('@')) setErrMsg("Incorrect email format")
+      if (inputData.password !== inputData.confirmPassword) setErrMsg("Password does not match")
       dispatch(signup(inputData, history));
     }
   };
@@ -69,7 +69,7 @@ const Authentication = () => {
 
   const googleFailure = (error) => {
     console.log(error);
-    return <Alert severity="error">Google Sign in was unsuccessful</Alert>;
+    setErrMsg("Google sign in was unsuccessful, please try again later or sign up with another email.")
   };
 
   const theme = createMuiTheme({
@@ -82,11 +82,19 @@ const Authentication = () => {
 
   return (
     <Container className={classes.authContainer}>
+      {
+        errMsg && (
+          <Alert className={classes.err} severity="error">{errMsg}</Alert>
+        )
+      }
       <Paper className={classes.auth} elevation={0}>
         <Typography className={classes.title} variant="h5">
           {login ? "Sign In" : "Sign Up"}
         </Typography>
-        <Link className={classes.signupOpt} onClick={() => setLogin(!login)}>
+        <Link className={classes.signupOpt} onClick={() => {
+          setLogin(!login)
+          setErrMsg(null)
+        }}>
           <Typography className={classes.signuplead} variant="body1">
             {login ? "Don't have an account?" : "Already have an account?"}
           </Typography>

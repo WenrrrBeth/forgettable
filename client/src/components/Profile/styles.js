@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import bgimgBorder from "../../designs/bgimg_BorderDesign.PNG";
 
 const theme = makeStyles((theme) => ({
   profileContainer: {

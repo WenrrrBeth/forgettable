@@ -1,17 +1,12 @@
 import {
   Container,
-  GridList,
-  GridListTile,
-  GridListTileBar,
   IconButton,
   Typography,
-  CircularProgress,
-  LinearProgress,
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfile, updateProfile } from "../../actions/profile";
+import { getProfile } from "../../actions/profile";
 import { getAllSharedPosts, updatePost } from "../../actions/post";
 import useStyles from "./styles";
 import "../../fonts.css";
@@ -21,13 +16,12 @@ const Home = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
   const [loading, setLoading] = useState(false);
-  const colSize = [1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
   const profile = useSelector((state) => state.profile);
   const posts = useSelector((state) => state.forgettable);
 
   useEffect(() => {
-    dispatch(getProfile(user?.result._id));
+    user?.result._id && dispatch(getProfile(user?.result._id));
     dispatch(getAllSharedPosts());
     posts[0]?.title ? setLoading(false) : setLoading(true);
   }, [user?.result?._id, dispatch, posts]);
@@ -73,65 +67,44 @@ const Home = () => {
           </div>
         )}
       </div>
-      <GridList
-        cellHeight={220}
-        spacing={3}
-        className={classes.gridList}
-        cols={5}
-      >
-        {posts.map((post, index) => (
-          <GridListTile
-            key={post?._id}
-            cols={
-              index < 13
-                ? colSize[index]
-                : colSize[index - 13 * Math.round(index / 13)]
-            }
-          >
-            <img src={post?.image.data} alt={post?.title} />
-            {user?.result?._id || user?.result?._googleId ? (
-              <GridListTileBar
-                className={classes.bar}
-                title={post?.title}
-                titlePosition="bottom"
-                actionIcon={
+      <Container className={classes.gridPost}>
+          {
+            posts.map((post, index) => (
+              <div className={classes.imageCol}>
+                <img className={classes.image} src={post?.image.data} alt={post?.title} />
+                <Container className={classes.detailContainer}>
+                  <Container className={classes.stretch}>
+                    <Typography className={classes.title}>{post?.title}</Typography>
+                  </Container>
                   <IconButton
-                    className={classes.saveIcon}
-                    onClick={() => handleClick(post)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill={
-                        user?.result._id
-                          ? (post?.saves.includes(user?.result?._id) || post?.saves.includes(user?.result?.googleId))
-                            ? "white"
-                            : "none"
-                          : "gray"
-                      }
-                      stroke={user?.result._id ? "white" : "gray"}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      className={classes.saveIcon}
+                      onClick={() => handleClick(post)}
                     >
-                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                  </IconButton>
-                }
-                actionPosition="right"
-              />
-            ) : (
-              <GridListTileBar
-                className={classes.bar}
-                title={post?.title}
-                titlePosition="bottom"
-              />
-            )}
-          </GridListTile>
-        ))}
-      </GridList>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill={
+                          user?.result._id
+                            ? (post?.saves.includes(user?.result?._id) || post?.saves.includes(user?.result?.googleId))
+                              ? "lightblue"
+                              : "none"
+                            : "white"
+                        }
+                        stroke={user?.result._id ? "lightblue" : "white"}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                    </IconButton>
+                  </Container>
+              </div>
+            ))
+          }
+      </Container>
     </Container>
   );
 };

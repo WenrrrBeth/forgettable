@@ -6,9 +6,8 @@ import {
   Chip,
   Button,
 } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { postEvent } from "../../actions/post";
@@ -72,17 +71,17 @@ const Postform = () => {
     }
   };
 
-  const toBase64 = (file) => {
-    return new Promise((resolve) => {
-      let reader = new FileReader();
-      let base = "";
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        base = e.target.result;
-        resolve(base);
-      };
-    });
-  };
+  // const toBase64 = (file) => {
+  //   return new Promise((resolve) => {
+  //     let reader = new FileReader();
+  //     let base = "";
+  //     reader.readAsDataURL(file);
+  //     reader.onload = (e) => {
+  //       base = e.target.result;
+  //       resolve(base);
+  //     };
+  //   });
+  // };
 
   const resizeFile = (file) => 
   new Promise((resolve) => {

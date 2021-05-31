@@ -61,12 +61,13 @@ export const signup = async (req, res) => {
   const { email, preferredName, password, confirmPassword } = req.body;
 
   try {
+    if (!email.split('').includes('@')) return res.status(400).json({ message: "Wrong email format."})
     // email that match the email client entered, registeredUser exist meaning signup email already exist
     const registeredUser = await Profile.findOne({ email });
     if (registeredUser)
       return res
         .status(400)
-        .json({ message: "Email already exist, please sign in instead." });
+        .json({ message: "Email already exist." });
 
     // check if client entered the password twice correctly
     if (password !== confirmPassword)

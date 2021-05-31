@@ -4,6 +4,13 @@ const theme = makeStyles((theme) => ({
   authContainer: {
     marginTop: "100px",
     alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
+  errMsg:{
+    width: "fit-content",
+    justifyContent: "center",
+    alignSelf: "center",
   },
   auth: {
     display: "flex",

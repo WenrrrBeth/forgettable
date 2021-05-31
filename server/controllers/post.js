@@ -6,7 +6,7 @@ export const postevent = async (req, res) => {
     const forgettable = req.body;
 
     try {
-        const newFgtb = new Forgettable({ ...forgettable, createdAt: new Date().toISOString() });
+        const newFgtb = new Forgettable({ ...forgettable, by: req.profileId, createdAt: new Date().toISOString() });
         await newFgtb.save();
         res.status(201).json({ newFgtb })
     } catch (error) {
@@ -49,6 +49,8 @@ export const getAllSharedPosts = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     const { pid: _id } = req.params;
+
+    if(!req.profileId) return res.json({ message: "Not authenticated" });
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found");
 

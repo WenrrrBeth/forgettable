@@ -1,4 +1,4 @@
-import { AUTH, UPDATE, FETCH_ONE, ADD_SAVE } from "../constants/actiontypes";
+import { AUTH, UPDATE, FETCH_ONE } from "../constants/actiontypes";
 import * as api from "../api/index";
 
 export const signin = (inputData, history) => async (dispatch) => {
@@ -8,6 +8,7 @@ export const signin = (inputData, history) => async (dispatch) => {
         history.push("/");
     } catch (error) {
         console.log(error);
+        return "No user found, please try to sign up instead."
     }
 }
 
@@ -27,7 +28,7 @@ export const googleSignin = (inputData, history) => async (dispatch) => {
         dispatch({type: AUTH, data});
         history.push("/");
     } catch (error) {
-        console.log(error);
+        console.log(JSON.stringify(error));
     }
 }
 

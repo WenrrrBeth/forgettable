@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const theme = makeStyles({
   homeContainer: {
     marginTop: "80px",
-    width: "70%",
+    width: "100%",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
@@ -15,10 +15,28 @@ const theme = makeStyles({
     wrap: "wrap",
     gap: "10px",
     marginBottom: "10px",
+    alignSelf: "center",
   },
   loadSktCol: {
     diplay: "flex",
     flexDirection: "column",
+    alignSelf: "center",
+  },
+  gridPost: {
+    columnCount: "4",
+    columnGap: "5px",
+  },
+  imageCol: {
+    display: "inline-block",
+    width: "100%",
+  },
+  image: {
+    display: "block",
+    width: "100%",
+    borderTopRightRadius: "10px",
+    borderTopLeftRadius: "10px",
+    borderBottomRightRadius: "10px",
+    borderBottomLeftRadius: "10px",
   },
   header: {
     display: "flex",
@@ -31,24 +49,35 @@ const theme = makeStyles({
     marginBottom: "25px",
     alignSelf: "center",
   },
-  bar: {
-    fontFamily: "'Playfair Display', serif",
-    fontSize: "15px",
-    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
-    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-  },
-  right: {
+
+  detailContainer: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    width: "100%",
+    padding: "0px 0px 5px 5px",
+    margin: "0px 0px 20px 0px",
+    borderBottomRightRadius: "10px",
+    borderBottomLeftRadius: "10px",
   },
-  saveNum: {
-    color: "gray",
-    marginRight: "-10px",
+  stretch: {
+    display: "flex",
+    alignItems: "stretch",
+    padding: "0px 0px 0px 3px",
+    margin: "0px",
+  },
+  title: {
+    display: "flex",
+    fontFamily: "'Playfair Display', serif",
+    fontSize: "15px",
+    padding: "0px",
+    margin: "0px",
   },
   saveIcon: {
-    marginRight: "0px",
-    width: "43px",
+    margin: "0px",
+    padding: "0px",
+    width: "20px",
+    height: "20px",
+    justifyContent: "flex-end"
   }
 });
 
