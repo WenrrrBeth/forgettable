@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-const theme = makeStyles({
+const theme = makeStyles((theme) => ({
     personalGrid: {
         marginTop: "20px",
         width: "100%",
@@ -89,7 +89,61 @@ const theme = makeStyles({
     chip: {
         marginRight: "10px",
         marginTop: "5px",
+    },
+    [theme.breakpoints.down("sm")]: {
+        personalGrid: {
+            marginTop: "20px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            padding: "0px",
+        },
+        date: {
+            width: "200px",
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "right",
+        },
+        time: {
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "18px",
+            marginRight: "5px",
+        },
+    },
+    [theme.breakpoints.down("xs")]: {
+        personalGrid: {
+            marginTop: "20px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            padding: "0px",
+        },
+        date: {
+            display: "none"
+        },
+        time: {
+            display: "none"
+        },
+        detailCard: {
+            width: "100%",
+            marginLeft: "0px",
+            padding: "15px",
+        },
+        title: {
+            fontFamily: "'Abril Fatface', cursive",
+            marginBottom: "10px",
+            fontSize: "18px"
+        },
+        detail: {
+            fontFamily: "'Playfair Display', serif",
+            lineHeight: "17px",
+            marginBottom: "20px",
+            fontSize: "14px",
+        },
+        
     }
-})
+}));
 
 export default theme;

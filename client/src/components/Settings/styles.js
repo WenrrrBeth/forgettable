@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const theme = makeStyles({
+const theme = makeStyles((theme) => ({
   settingsContainer: {
     marginTop: "60px",
   },
@@ -37,6 +37,7 @@ const theme = makeStyles({
   imgUploadButton: {
     background: "#DBDBDB",
     borderRadius: 20,
+    fontFamily: "'Playfair Display', serif",
   },
   label: {
     cursor: "pointer",
@@ -49,12 +50,44 @@ const theme = makeStyles({
     display: "flex",
     flexDirection: "row",
     alignSelf: "flex-end",
+    marginBottom: "20px",
   },
   button: {
     background: "#DBDBDB",
     borderRadius: 20,
     marginLeft: "15px",
+    fontFamily: "'Playfair Display', serif",
   },
-});
+  [theme.breakpoints.down('sm')] : {
+    form: {
+      width: "80%",
+    },
+  },
+  [theme.breakpoints.down('xs')] : {
+    settingsContainer: {
+      marginTop: "60px",
+      padding: "0px",
+    },
+    form: {
+      width: "100%",
+    },
+    formGrid: {
+      display: "flex",
+      flexDirection: "column",
+      marginTop: "30px",
+    },
+    imgUploadButton: {
+      background: "#DBDBDB",
+      borderRadius: 20,
+      fontFamily: "'Playfair Display', serif",
+      fontSize: "13px",
+    },
+    fileName: {
+      marginLeft: "10px",
+      fontSize: "17px",
+    },
+  }
+
+}));
 
 export default theme;

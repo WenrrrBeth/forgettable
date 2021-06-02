@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const theme = makeStyles({
+const theme = makeStyles((theme) => ({
   appBar: {
     display: "flex",
     flexDirection: "row",
@@ -18,15 +18,16 @@ const theme = makeStyles({
     justifyContent: "flex-end",
     width: "100%",
   },
-//   home: {
-//     cursor: "pointer",
-//   },
-//   write: {
-//     cursor: "pointer",
-//   },
-//   profile: {
-//     cursor: "pointer",
-//   },
-});
+  [theme.breakpoints.down("xs")]: {
+    toolbar: {
+      display: "flex",
+      justifyContent: "flex-end",
+      width: "100%",
+    },
+    icon: {
+      padding: "7px",
+    }
+  }
+}));
 
 export default theme;

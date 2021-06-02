@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const theme = makeStyles({
+const theme = makeStyles((theme) => ({
     postFormContainer: {
         marginTop: "60px",
     },
@@ -43,6 +43,7 @@ const theme = makeStyles({
     fgtbimgButton: {
         background: "#DBDBDB",
         borderRadius: 20,
+        fontFamily: "'Playfair Display', serif",
     },
     label: {
         cursor: "pointer",
@@ -52,6 +53,13 @@ const theme = makeStyles({
     },
     fileName: {
         marginLeft: "10px",
+    },
+    warning: {
+        marginTop: "5px",
+        textAlign: "left",
+        width: "100%",
+        fontSize: "15px",
+        color: "red",
     },
     optButtons: {
         marginTop: "30px",
@@ -63,7 +71,40 @@ const theme = makeStyles({
         background: "#DBDBDB",
         borderRadius: 20,
         marginLeft: "15px",
+        fontFamily: "'Playfair Display', serif",
+    },
+    [theme.breakpoints.down("xs")]: {
+        form: {
+            width: "100%",
+        },
+        formGrid: {
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "30px",
+        },
+        fgtbimgButton: {
+            background: "#DBDBDB",
+            borderRadius: 20,
+            fontSize: "12px",
+        },
+        fileName: {
+            marginLeft: "10px",
+            fontSize: "12px",
+        },
+        fgtbimg: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: "5px",
+            alignSelf: "self-start",
+        },
+        optButtons: {
+            marginTop: "20px",
+            display: "flex",
+            flexDirection: "row",
+            alignSelf: "center",
+        },
     }
-})
+}))
 
 export default theme;

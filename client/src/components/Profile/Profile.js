@@ -19,7 +19,7 @@ import { LOGOUT } from "../../constants/actiontypes";
 import { getProfile } from "../../actions/profile";
 import { getUnsharedPosts, getSharedPosts, getSavedPost } from "../../actions/post";
 import bgimg from "../../designs/bgimg_defaultDesign.png";
-import bgimgBorder from "../../designs/bgimg_BorderDesign.PNG";
+import bgimgBorder from "../../designs/bgimg_BorderDesign6.png";
 import profileimg from "../../designs/profile_default.jpeg";
 import Gridposts from "./GridPosts/Gridposts";
 import Detailposts from "./DetailPosts/Detailposts";
@@ -50,6 +50,9 @@ const AntTab = withStyles((theme) => ({
     },
     fontWeight: theme.typography.fontWeightMedium,
     fontSize: theme.typography.pxToRem(17),
+    [theme.breakpoints.down("xs")]: {
+      fontSize: theme.typography.pxToRem(13),
+    }
   },
 }))((props) => <Tab disableRipple {...props} />);
 
@@ -228,9 +231,9 @@ const Profile = () => {
         </Card>
         <div className={classes.subNav}>
           <AntTabs value={subNav} onChange={handleTabChange}>
-            <AntTab label="Personal" />
-            <AntTab label="Shared" />
-            <AntTab label="Saved" />
+            <AntTab className={classes.navIndicator} label="Personal" />
+            <AntTab className={classes.navIndicator} label="Shared" />
+            <AntTab className={classes.navIndicator} label="Saved" />
           </AntTabs>
         </div>
         <DisplayOpt className={classes.subComponent} />

@@ -25,10 +25,10 @@ const theme = makeStyles((theme) => ({
   bgimgOverlay: {
     position: "relative",
     objectFit: "fill",
-    marginTop: "-50px",
-    marginLeft: "-2%",
-    width: "107%",
-    height: "80vh",
+    marginTop: "-0px",
+    marginLeft: "-0%",
+    width: "100%",
+    height: "70vh",
     zIndex: 100,
   },
   bgimg: {
@@ -88,10 +88,66 @@ const theme = makeStyles((theme) => ({
   },
 
   [theme.breakpoints.down("sm")]: {
-    bgimg: {
+    background: {
+      position:"relative",
+      top: 0,
+      left: 0,
       width: "100%",
+      height: "70vh",
+    },
+    profileContainer: {
+      padding: "0px",
+      marginTop: "60px",
+      alignItems: "center",
+    },
+    bgimgOverlay: {
+      position: "relative",
+      objectFit: "fill",
+      marginTop: "-1px",
+      marginLeft: "-1px",
+      width: "101%",
+      height: "71vh",
+      zIndex: 100,
     },
   },
+  [theme.breakpoints.down("xs")]: {
+    background: {
+      position:"relative",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "70vh",
+    },
+    bgimgOverlay: {
+      position: "relative",
+      objectFit: "fill",
+      marginTop: "-0px",
+      marginLeft: "-0%",
+      width: "100%",
+      height: "70vh",
+      zIndex: 100,
+    },
+    bgimg: {
+      top: 0,
+      left: 0,
+      objectFit: "cover",
+      position: "absolute",
+      width: "100%",
+      height: "70vh",
+    },
+    nameCard: {
+      display: "flex",
+      flexDirection: "column",
+      zIndex: 1100,
+      maxWidth: "350px",
+      marginTop: "-100px",
+      borderRadius: "50px",
+      alignSelf: "center",
+    },
+    subNav: {
+      marginTop: "10px",
+    },
+  }
 }));
 
 export default theme;

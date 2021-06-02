@@ -6,6 +6,7 @@ export const postevent = async (req, res) => {
     const forgettable = req.body;
 
     try {
+        if (!forgettable.image.data || !forgettable.image.filetype || !forgettable.title ) res.status(400).json({ msessage: "Insufficient information."})
         const newFgtb = new Forgettable({ ...forgettable, by: req.profileId, createdAt: new Date().toISOString() });
         await newFgtb.save();
         res.status(201).json({ newFgtb })

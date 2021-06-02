@@ -29,7 +29,7 @@ const Navigation = () => {
         Forgettable
       </Typography>
       <Toolbar className={classes.toolbar}>
-        <IconButton className={classes.home} component={Link} to="/">
+        <IconButton className={classes.icon} component={Link} to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -47,7 +47,7 @@ const Navigation = () => {
           </svg>
         </IconButton>
         <IconButton
-          className={classes.write}
+          className={classes.icon}
           component={Link}
           to={user ? "/write" : "/profile/authenticate"}
         >
@@ -70,7 +70,7 @@ const Navigation = () => {
           </svg>
         </IconButton>
         <IconButton
-          className={classes.profile}
+          className={classes.icon}
           component={Link}
           to={
             user?.result?.googleId || user?.result?._id

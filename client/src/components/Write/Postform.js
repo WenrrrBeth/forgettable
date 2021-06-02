@@ -20,6 +20,7 @@ const Postform = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [hashTags, setHashTags] = useState([]);
+  const [invalid, setInvalid] = useState(false);
   const [fgtbData, setFgtbData] = useState({
     by: "",
     title: "",
@@ -46,9 +47,13 @@ const Postform = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags }, history)
-    );
+    if (!fgtbData.image.data) {
+      setInvalid(true);
+    } else {
+      dispatch(
+        postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags }, history)
+      );
+    }
     clearData();
   };
 
@@ -71,23 +76,11 @@ const Postform = () => {
     }
   };
 
-  // const toBase64 = (file) => {
-  //   return new Promise((resolve) => {
-  //     let reader = new FileReader();
-  //     let base = "";
-  //     reader.readAsDataURL(file);
-  //     reader.onload = (e) => {
-  //       base = e.target.result;
-  //       resolve(base);
-  //     };
-  //   });
-  // };
-
   const resizeFile = (file) => 
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      200``,
+      200,
       150,
       file.type,
       100,
@@ -101,20 +94,7 @@ const Postform = () => {
 
   const handleFgtbChange = (e) => {
     setFgtbImgName(e.target.files[0].name);
-    // toBase64(e.target.files[0])
-    //   .then((result) => {
-    //     setFgtbData({
-    //       ...fgtbData,
-    //       image: {
-    //         filename: e.target.files[0].name,
-    //         filetype: e.target.files[0].type,
-    //         data: result,
-    //       },
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    setInvalid(false);
     try {
       const file = e.target.files[0];
       resizeFile(file)
@@ -236,6 +216,9 @@ const Postform = () => {
                   {fgtbImgName}
                 </Typography>
               </div>
+              {
+                invalid && <Typography className={classes.warning}>Please choose an image.</Typography>
+              }
               <div className={classes.optButtons}>
                 <Button className={classes.button} component={Link} to="/profile">
                   Cancel

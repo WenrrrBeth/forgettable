@@ -83,6 +83,41 @@ const theme = makeStyles((theme) => ({
     marginLeft: "5px",
     fontFamily: "'Arya', sans-serif",
     color: "#A9A9A9",
+  },
+  [theme.breakpoints.down("xs")]: {
+    authContainer: {
+      marginTop: "60px",
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      padding: "0px",
+    },
+    form: {
+      width: "100%",
+    },
+    signwgoogle: {
+      marginLeft: "5px",
+      fontFamily: "'Arya', sans-serif",
+      fontSize: "15px",
+      color: "#A9A9A9",
+    },
+    grid: {
+      display: "flex",
+      flexDirection: "column",
+      marginTop: "20px",
+    },
+    signinButton: {
+      marginTop: "10px",
+      background: "#DBDBDB",
+      borderRadius: 21,
+      border: 0,
+      color: "black",
+      height: 50,
+      width: "70%",
+      fontFamily: "'Playfair Display', serif",
+      fontSize: 18,
+      alignSelf: "center",
+    },
   }
 }));
 

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const theme = makeStyles({
+const theme = makeStyles((theme) => ({
   homeContainer: {
     marginTop: "30px",
     width: "70%",
@@ -50,7 +50,67 @@ const theme = makeStyles({
     fontSize: "15px",
     padding: "0px",
     margin: "0px",
+  },
+  [theme.breakpoints.down("md")]: {
+    homeContainer: {
+      marginTop: "30px",
+      width: "80%",
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-around",
+      overflow: "hidden",
+    },
+    title: {
+      display: "flex",
+      fontFamily: "'Playfair Display', serif",
+      fontSize: "12px",
+      padding: "0px",
+      margin: "0px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      homeContainer: {
+        marginTop: "30px",
+        width: "100%",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        overflow: "hidden",
+      },
+      title: {
+        display: "flex",
+        fontFamily: "'Playfair Display', serif",
+        fontSize: "12px",
+        padding: "0px",
+        margin: "0px",
+      },
+      gridPost: {
+        columnCount: "3",
+        columnGap: "5px",
+      },
+    },
+    [theme.breakpoints.down("xs")]: {
+      homeContainer: {
+        marginTop: "30px",
+        width: "100%",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        overflow: "hidden",
+      },
+      title: {
+        display: "flex",
+        fontFamily: "'Playfair Display', serif",
+        fontSize: "12px",
+        padding: "0px",
+        margin: "0px",
+      },
+      gridPost: {
+        columnCount: "2",
+        columnGap: "5px",
+        padding: "0px",
+      },
+    }
   }
-});
+}));
 
 export default theme;

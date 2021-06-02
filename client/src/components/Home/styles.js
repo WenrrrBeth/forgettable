@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const theme = makeStyles({
+const theme = makeStyles((theme) => ({
   homeContainer: {
     marginTop: "80px",
     width: "100%",
@@ -8,6 +8,7 @@ const theme = makeStyles({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
+    margin: "0px",
   },
   loadSktRow: {
     display: "flex",
@@ -78,7 +79,39 @@ const theme = makeStyles({
     width: "20px",
     height: "20px",
     justifyContent: "flex-end"
-  }
-});
+  },
+  [theme.breakpoints.down("sm")]: {
+    gridPost: {
+      columnCount: "3",
+      columnGap: "5px",
+    },
+  },
+  [theme.breakpoints.down("xs")]: {
+    homeContainer: {
+      marginTop: "80px",
+      width: "100%",
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-around",
+      overflow: "hidden",
+      margin: "0px",
+      padding: "0px",
+    },
+    gridPost: {
+      columnCount: "2",
+      columnGap: "5px",
+      margin: "0px",
+      padding: "0px"
+    },
+    title: {
+      display: "flex",
+      fontFamily: "'Playfair Display', serif",
+      fontSize: "10px",
+      padding: "0px",
+      margin: "0px",
+    },
+  },
+
+}));
 
 export default theme;
