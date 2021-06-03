@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 import useStyles from "./styles";
 import { Typography, Toolbar, AppBar, IconButton } from "@material-ui/core";
@@ -8,9 +8,20 @@ import "../../fonts.css";
 const Navigation = () => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const navOpt = location.pathname;
+
+  useEffect(() => {
+    if (!user && navOpt==="/profile") {
+      history.push("/profile/authenticate")
+    } else if (user && navOpt==="/profile/authenticate") {
+      history.push("/profile");
+    } else if (navOpt!=="/"||navOpt!=="/write"||navOpt!=="/profile"||navOpt!=="/profile/authenticate"||navOpt!=="/profile/settings") {
+      history.push("/");
+    }
+  }, [])
 
   return (
     <AppBar

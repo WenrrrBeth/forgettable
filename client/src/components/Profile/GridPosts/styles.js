@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const theme = makeStyles((theme) => ({
   homeContainer: {
     marginTop: "30px",
-    width: "70%",
+    width: "90%",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",

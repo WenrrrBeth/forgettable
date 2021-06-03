@@ -81,7 +81,7 @@ const Postform = () => {
     Resizer.imageFileResizer(
       file,
       200,
-      150,
+      200,
       file.type,
       100,
       0,

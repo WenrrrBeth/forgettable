@@ -100,14 +100,14 @@ const theme = makeStyles((theme) => ({
             padding: "0px",
         },
         date: {
-            width: "200px",
+            width: "300px",
             display: "flex",
             flexDirection: "column",
             textAlign: "right",
         },
         time: {
             fontFamily: "'Playfair Display', serif",
-            fontSize: "18px",
+            fontSize: "25px",
             marginRight: "5px",
         },
     },

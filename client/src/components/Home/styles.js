@@ -80,13 +80,42 @@ const theme = makeStyles((theme) => ({
     height: "20px",
     justifyContent: "flex-end"
   },
+  [theme.breakpoints.down('md')]:{
+    detailContainer: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+      padding: "0px 0px 5px 5px",
+      margin: "0px 0px 13px 0px",
+      borderBottomRightRadius: "10px",
+      borderBottomLeftRadius: "10px",
+    },
+  },
   [theme.breakpoints.down("sm")]: {
+    detailContainer: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+      padding: "0px 0px 5px 5px",
+      margin: "0px 0px 10px 0px",
+      borderBottomRightRadius: "10px",
+      borderBottomLeftRadius: "10px",
+    },
     gridPost: {
       columnCount: "3",
       columnGap: "5px",
     },
   },
   [theme.breakpoints.down("xs")]: {
+    detailContainer: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+      padding: "0px 0px 5px 5px",
+      margin: "0px 0px 5px 0px",
+      borderBottomRightRadius: "10px",
+      borderBottomLeftRadius: "10px",
+    },
     homeContainer: {
       marginTop: "80px",
       width: "100%",

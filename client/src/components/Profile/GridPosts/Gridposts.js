@@ -19,7 +19,7 @@ const Gridposts = ({ posts, profile }) => {
                   <Container className={classes.stretch}>
                     <Typography className={classes.title}>{post?.title}</Typography>
                   </Container>
-                  </Container>
+                </Container>
               </div>
             ))
           }

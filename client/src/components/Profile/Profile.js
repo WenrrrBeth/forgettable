@@ -43,7 +43,7 @@ const AntTab = withStyles((theme) => ({
       opacity: 1,
     },
     "&$selected": {
-      color: "#1890ff",
+      color: "#3EA3B0",
     },
     "&:focus": {
       color: "#3EA3B0",
@@ -54,6 +54,7 @@ const AntTab = withStyles((theme) => ({
       fontSize: theme.typography.pxToRem(13),
     }
   },
+  selected: {},
 }))((props) => <Tab disableRipple {...props} />);
 
 const Profile = () => {
@@ -88,15 +89,6 @@ const Profile = () => {
   const unsharedPosts = useSelector((state) => state.unshared);
   const sharedPosts = useSelector((state) => state.shared);
   const savedPosts = useSelector((state) => state.saved);
-
-  // useEffect(() => {
-  //   const token = user?.token;
-  //   if (token) {
-  //       const decodedToken = decode(token);
-  //       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-  //   }
-  //   setUser(JSON.parse(localStorage.getItem('profile')));
-  // }, [location])
 
   const handleTabChange = (e, newValue) => {
     setSubNav(newValue);

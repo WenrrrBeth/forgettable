@@ -118,6 +118,7 @@ const Authentication = () => {
                   onChange={handleChange}
                   variant="filled"
                   required
+                  autoComplete="on"
                 />
                 {!login && (
                   <TextField
@@ -127,6 +128,7 @@ const Authentication = () => {
                     onChange={handleChange}
                     variant="filled"
                     required
+                    autoComplete="on"
                   />
                 )}
                 <TextField
@@ -137,6 +139,7 @@ const Authentication = () => {
                   variant="filled"
                   required
                   type={showPassword ? "text" : "password"}
+                  autoComplete="off"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -189,6 +192,7 @@ const Authentication = () => {
                     required
                     type="password"
                     variant="filled"
+                    autoComplete="off"
                   />
                 )}
               </Grid>

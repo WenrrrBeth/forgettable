@@ -8,8 +8,14 @@ import Postform from "./components/Write/Postform";
 import Authentication from "./components/Authentication/Authentication";
 import Profile from "./components/Profile/Profile";
 import Settings from "./components/Settings/Settings";
+import { useLocation, useHistory } from "react-router-dom";
 
 function App() {
+  // const location = useLocation();
+  // const history = useHistory();
+
+  // console.log(location);
+
   return (
     <BrowserRouter>
       <Container maxwidth="lg">

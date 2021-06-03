@@ -19,7 +19,8 @@ export const postevent = async (req, res) => {
 export const getUnsharedPosts = async (req, res) => {
     const { id: _id } = req.params;
     try {
-        const unsharedFgtb = await Forgettable.find({ by: _id, shared: false });
+        const unsharedFgtb = await Forgettable.find({ by: _id, shared: false }).sort({ createdAt: "desc" });
+        // const reverseUnshared = unsharedFgtb.sort({createdAt: -1});
         res.status(200).json(unsharedFgtb);
     } catch (error) {
         console.log(error);
@@ -30,7 +31,8 @@ export const getUnsharedPosts = async (req, res) => {
 export const getSharedPosts = async (req, res) => {
     const { id: _id } = req.params;
     try {
-        const sharedFgtb = await Forgettable.find({ by: _id, shared: true });
+        const sharedFgtb = await Forgettable.find({ by: _id, shared: true }).sort({ createdAt: "desc" });
+        // const reverseShared = sharedFgtb.sort({createdAt: -1});
         res.status(200).json(sharedFgtb);
     } catch (error) {
         console.log(error);
