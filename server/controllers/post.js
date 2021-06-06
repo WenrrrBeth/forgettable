@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Forgettable from "../models/forgettable.js";
+import Image from "../models/image.js";
 import Profile from "../models/profile.js";
 
 export const postevent = async (req, res) => {
@@ -42,7 +43,7 @@ export const getSharedPosts = async (req, res) => {
 
 export const getAllSharedPosts = async (req, res) => {
     try {
-        const allSharedFgtbs = await Forgettable.find({ shared: true });
+        const allSharedFgtbs = await Forgettable.find({ shared: true }).select('-image.lgData');
         res.status(200).json(allSharedFgtbs);
     } catch (error) {
         console.log(error);
@@ -73,6 +74,17 @@ export const getSavedPost = async (req, res) => {
     try {
         const savedFgtb = await Forgettable.find({ saves: _id });
         res.status(200).json(savedFgtb);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const getlgImage = async (req, res) => {
+    const { pid: _id } = req.params;
+    try {
+        const image = await Forgettable.findById(_id).select("image.lgData")
+        res.status(200).json(image);
     } catch (error) {
         console.log(error);
         res.status(404).json({ message: error.message });

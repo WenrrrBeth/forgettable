@@ -10,6 +10,9 @@ import Profile from "./components/Profile/Profile";
 import Settings from "./components/Settings/Settings";
 import { useLocation, useHistory } from "react-router-dom";
 
+
+import Test from "./components/Test/Test";
+
 function App() {
   // const location = useLocation();
   // const history = useHistory();
@@ -26,6 +29,8 @@ function App() {
           <Route path="/profile" exact component={Profile} />
           <Route path="/profile/authenticate" exact component={Authentication} />
           <Route path="/profile/settings" exact component={Settings} />
+
+          <Route path="/test" exact component={Test} />
         </Switch>
       </Container>
     </BrowserRouter>

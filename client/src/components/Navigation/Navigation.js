@@ -14,13 +14,13 @@ const Navigation = () => {
   const navOpt = location.pathname;
 
   useEffect(() => {
-    if (!user && navOpt==="/profile") {
-      history.push("/profile/authenticate")
-    } else if (user && navOpt==="/profile/authenticate") {
-      history.push("/profile");
-    } else if (navOpt!=="/"||navOpt!=="/write"||navOpt!=="/profile"||navOpt!=="/profile/authenticate"||navOpt!=="/profile/settings") {
-      history.push("/");
-    }
+    // if (!user && navOpt==="/profile") {
+    //   history.push("/profile/authenticate")
+    // } else if (user && navOpt==="/profile/authenticate") {
+    //   history.push("/profile");
+    // } else if (navOpt!=="/"||navOpt!=="/write"||navOpt!=="/profile"||navOpt!=="/profile/authenticate"||navOpt!=="/profile/settings") {
+    //   history.push("/");
+    // }
   }, [])
 
   return (

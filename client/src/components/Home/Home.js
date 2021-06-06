@@ -5,6 +5,8 @@ import {
 } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import React, { useState, useEffect } from "react";
+import { LazyLoadImage, LazyLoadComponent } from 'react-lazy-load-image-component';
+// import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../actions/profile";
 import { getAllSharedPosts, updatePost } from "../../actions/post";
@@ -17,16 +19,15 @@ const Home = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [loading, setLoading] = useState(false);
 
-  const shuffle = (array) => {
-    for (let i=array.length-1; i>0; i--) {
-      const j = Math.floor(Math.random() * (i+1));
-      [array[i], array[j]] = [array[j], array[i]]
-    }
-    return array;
-  }
-
   const profile = useSelector((state) => state.profile);
   const posts = useSelector((state) => state.forgettable);
+
+
+
+  let scrollPosition = {
+    x: typeof window === "undefined" ? 0 : window.scrollX || window.pageXOffset,
+    y: typeof window === "undefined" ? 0 : window.scrollY || window.pageYOffset,
+  }
 
   useEffect(() => {
     user?.result._id && dispatch(getProfile(user?.result._id));
@@ -79,15 +80,17 @@ const Home = () => {
           {
             posts.map((post, index) => (
               <div key={index} className={classes.imageCol}>
-                <img className={classes.image} src={post?.image.data} alt={post?.title} />
-                <Container className={classes.detailContainer}>
-                  <Container className={classes.stretch}>
-                    <Typography className={classes.title}>{post?.title}</Typography>
-                  </Container>
-                  <IconButton
-                      className={classes.saveIcon}
-                      onClick={() => handleClick(post)}
-                    >
+
+                <LazyLoadComponent >
+                  <img className={classes.image} src={post?.image.data} alt={post?.title} />
+                  <Container className={classes.detailContainer}>
+                    <Container className={classes.stretch}>
+                      <Typography className={classes.title}>{post?.title}</Typography>
+                    </Container>
+                    <IconButton
+                        className={classes.saveIcon}
+                        onClick={() => handleClick(post)}
+                      >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -109,6 +112,9 @@ const Home = () => {
                       </svg>
                     </IconButton>
                   </Container>
+                </LazyLoadComponent>
+
+
               </div>
             ))
           }

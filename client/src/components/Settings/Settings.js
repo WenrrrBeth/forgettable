@@ -79,10 +79,9 @@ const Settings = () => {
   }
 
   const handleProfileChange = (e) => {
-    setProfileimg(e.target.files[0].name);
-    toBase64(e.target.files[0])
+    setProfileimg(e?.target.files[0].name);
+    toBase64(e?.target.files[0])
       .then(result => {
-        console.log(result);
         setUserData({
           ...userData,
           profileimg: {
@@ -114,8 +113,8 @@ const Settings = () => {
   }
 
   const handleBgChange = (e) => {
-    setBgimg(e.target.files[0].name);
-      toBase64(e.target.files[0])
+    setBgimg(e?.target.files[0].name);
+    toBase64(e?.target.files[0])
       .then(result => {
         setUserData({
         ...userData,
@@ -174,7 +173,7 @@ const Settings = () => {
                 name="mind"
                 label="What's on your mind?"
                 onChange={(e) =>
-                  setUserData({ ...userData, mind: e.target.value })
+                  setUserData({ ...userData, mind: e?.target.value })
                 }
                 variant="filled"
                 required
@@ -184,7 +183,7 @@ const Settings = () => {
               />
               <div className={classes.imgUpload}>
                 <Button className={classes.imgUploadButton}>
-                  <label className={classes.label} for="imgProfileUpload">
+                  <label className={classes.label} htmlFor="imgProfileUpload">
                     Choose Profile Image
                   </label>
                 </Button>

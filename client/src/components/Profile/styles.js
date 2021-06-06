@@ -67,6 +67,7 @@ const theme = makeStyles((theme) => ({
   name: {
     fontFamily: "'Playfair Display', serif",
     marginTop: "20px",
+    marginRight: "10px",
   },
   controls: {
     display: "flex",

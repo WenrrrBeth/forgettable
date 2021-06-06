@@ -7,7 +7,6 @@ const theme = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    overflow: "hidden",
     margin: "0px",
   },
   loadSktRow: {
@@ -72,6 +71,7 @@ const theme = makeStyles((theme) => ({
     fontSize: "15px",
     padding: "0px",
     margin: "0px",
+    lineHeight: "17px"
   },
   saveIcon: {
     margin: "0px",
@@ -122,7 +122,6 @@ const theme = makeStyles((theme) => ({
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "space-around",
-      overflow: "hidden",
       margin: "0px",
       padding: "0px",
     },

@@ -26,11 +26,13 @@ const Postform = () => {
     title: "",
     content: "",
     tags: [],
-    image: { filename: "", filetype: "", data: "" },
+    image: { filename: "", filetype: "", data: "", lgData: "" },
     shared: false,
   });
   const [fgtbImgName, setFgtbImgName] = useState("No files choosen.");
   const user = JSON.parse(localStorage.getItem("profile"));
+  const [smimg, setSmimg] = useState("");
+  const [lgimg, setLgimg] = useState("");
 
   const clearData = () => {
     setFgtbData({
@@ -38,12 +40,15 @@ const Postform = () => {
       title: "",
       content: "",
       tags: [],
-      image: { filename: "", filetype: "", data: "" },
+      image: { filename: "", filetype: "", data: "", lgData: "" },
       shared: false,
     });
-    setHashTags([])
-    setFgtbImgName("No files choosen.")
+    setHashTags([]);
+    setFgtbImgName("No files choosen.");
+    setSmimg("");
+    setLgimg("");
   }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,10 +56,10 @@ const Postform = () => {
       setInvalid(true);
     } else {
       dispatch(
-        postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags }, history)
+        postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags, image: { ...fgtbData.image, data: smimg, lgData: lgimg } }, history)
       );
+      clearData();
     }
-    clearData();
   };
 
   const theme = createMuiTheme({
@@ -70,7 +75,7 @@ const Postform = () => {
   };
 
   const handleTagChange = (e) => {
-    if (e.target.value.slice(-1) === " ") {
+    if (e?.target.value.slice(-1) === " ") {
       setHashTags((hashTags) => [...hashTags, e.target.value.trim()]);
       e.target.value = "";
     }
@@ -80,8 +85,8 @@ const Postform = () => {
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      200,
-      200,
+      80,
+      80,
       file.type,
       100,
       0,
@@ -92,26 +97,70 @@ const Postform = () => {
     );
   });
 
-  const handleFgtbChange = (e) => {
-    setFgtbImgName(e.target.files[0].name);
-    setInvalid(false);
-    try {
-      const file = e.target.files[0];
-      resizeFile(file)
-        .then(result => {
-          setFgtbData({
-            ...fgtbData,
-            image: {
-              filename: e.target.files[0].name,
-              filetype: e.target.files[0].type,
-              data: result,
-            }
+  const toBase64 = (file) => {
+    return new Promise((resolve) => {
+      let reader = new FileReader();
+      let base = "";
+      reader.readAsDataURL(file)
+      reader.onload = (e) => {
+        base = e.target.result;
+        resolve(base)
+      }
+    })
+  }
+
+
+  // const handleFgtbChange = (e) => {
+  //   setFgtbImgName(e.target.files[0].name);
+  //   setInvalid(false);
+  //   try {
+  //     const file = e.target.files[0];
+  //     resizeSmFile(file)
+  //       .then(result => {
+  //         setSmimg(result);
+  //       });
+  //     resizeLgFile(file)
+  //       .then(lgresult => {
+  //         setLgimg(lgresult)
+  //       });
+  //     setFgtbData({...fgtbData, image: { filename: file.name, filetyle: file.type, data: smimg, lgData: lgimg }});
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // console.log(smimg)
+
+  const writeImageData = (file) => {
+    Resizer.imageFileResizer(
+      file,
+      80,
+      80,
+      file.type,
+      100,
+      0,
+      (uri) => {
+        toBase64(file)
+          .then(result => {
+            setFgtbData({ ...fgtbData, image: { filename: file.name, filetype: file.type, data: uri, lgData: result} })
           })
-        })
+      },
+      "base64"
+    );
+  }
+
+  const handleFgtbChange = async (e) => {
+    const file = e.target.files[0];
+    setFgtbImgName(file.name)
+    setInvalid(false)
+    try {
+      writeImageData(file);
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
+  
+  console.log(fgtbData)
 
   return (
     <Container className={classes.postFormContainer}>
@@ -136,7 +185,7 @@ const Postform = () => {
                 onChange={(e) =>
                   setFgtbData({
                     ...fgtbData,
-                    title: e.target.value,
+                    title: e?.target.value,
                   })
                 }
                 variant="filled"
@@ -147,7 +196,7 @@ const Postform = () => {
                 name="content"
                 label="Content"
                 onChange={(e) => {
-                  setFgtbData({ ...fgtbData, content: e.target.value });
+                  setFgtbData({ ...fgtbData, content: e?.target.value });
                 }}
                 variant="filled"
                 required
@@ -171,6 +220,7 @@ const Postform = () => {
                 { hashTags &&
                   hashTags.map((tag, i) => (
                     <Chip
+                      key={i}
                       className={classes.chip}
                       icon={
                         <svg
@@ -210,7 +260,7 @@ const Postform = () => {
                   className={classes.fileUploadInput}
                   type="file"
                   accept=".jpg, .jpeg, .png"
-                  onChange={handleFgtbChange}
+                  onChange={(e) => handleFgtbChange(e)}
                 />
                 <Typography className={classes.fileName}>
                   {fgtbImgName}

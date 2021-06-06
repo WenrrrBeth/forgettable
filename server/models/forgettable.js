@@ -18,6 +18,10 @@ const postSchema = mongoose.Schema({
       type: String,
       default: "",
     },
+    lgData: {
+      type: String,
+      default: "",
+    }
   },
   saves: [],
   createdAt: {

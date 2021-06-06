@@ -10,3 +10,4 @@ export const FETCH_SHARED = "FETCH_SHARED";
 export const FETCH_ALL_SHARED = "FETCH_ALL_SHARED";
 export const SAVE = "SAVE";
 export const FETCH_SAVED = "FETCH_SAVED";
+export const FETCH_IMAGE = "FETCH_IMAGE";
