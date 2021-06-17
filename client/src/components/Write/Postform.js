@@ -26,13 +26,11 @@ const Postform = () => {
     title: "",
     content: "",
     tags: [],
-    image: { filename: "", filetype: "", data: "", lgData: "" },
+    image: { filename: "", filetype: "", data: "" },
     shared: false,
   });
   const [fgtbImgName, setFgtbImgName] = useState("No files choosen.");
   const user = JSON.parse(localStorage.getItem("profile"));
-  const [smimg, setSmimg] = useState("");
-  const [lgimg, setLgimg] = useState("");
 
   const clearData = () => {
     setFgtbData({
@@ -40,13 +38,11 @@ const Postform = () => {
       title: "",
       content: "",
       tags: [],
-      image: { filename: "", filetype: "", data: "", lgData: "" },
+      image: { filename: "", filetype: "", data: "" },
       shared: false,
     });
     setHashTags([]);
     setFgtbImgName("No files choosen.");
-    setSmimg("");
-    setLgimg("");
   }
 
 
@@ -56,7 +52,7 @@ const Postform = () => {
       setInvalid(true);
     } else {
       dispatch(
-        postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags, image: { ...fgtbData.image, data: smimg, lgData: lgimg } }, history)
+        postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags }, history)
       );
       clearData();
     }
@@ -81,22 +77,6 @@ const Postform = () => {
     }
   };
 
-  const resizeFile = (file) => 
-  new Promise((resolve) => {
-    Resizer.imageFileResizer(
-      file,
-      80,
-      80,
-      file.type,
-      100,
-      0,
-      (uri) => {
-        resolve(uri);
-      },
-      "base64"
-    );
-  });
-
   const toBase64 = (file) => {
     return new Promise((resolve) => {
       let reader = new FileReader();
@@ -109,33 +89,11 @@ const Postform = () => {
     })
   }
 
-
-  // const handleFgtbChange = (e) => {
-  //   setFgtbImgName(e.target.files[0].name);
-  //   setInvalid(false);
-  //   try {
-  //     const file = e.target.files[0];
-  //     resizeSmFile(file)
-  //       .then(result => {
-  //         setSmimg(result);
-  //       });
-  //     resizeLgFile(file)
-  //       .then(lgresult => {
-  //         setLgimg(lgresult)
-  //       });
-  //     setFgtbData({...fgtbData, image: { filename: file.name, filetyle: file.type, data: smimg, lgData: lgimg }});
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // console.log(smimg)
-
   const writeImageData = (file) => {
     Resizer.imageFileResizer(
       file,
-      80,
-      80,
+      200,
+      200,
       file.type,
       100,
       0,
@@ -159,8 +117,6 @@ const Postform = () => {
       console.log(error)
     }
   }
-  
-  console.log(fgtbData)
 
   return (
     <Container className={classes.postFormContainer}>

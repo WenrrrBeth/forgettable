@@ -33,6 +33,7 @@ const theme = makeStyles((theme) => ({
   image: {
     display: "block",
     width: "100%",
+    minHeight: "100px",
     borderTopRightRadius: "10px",
     borderTopLeftRadius: "10px",
     borderBottomRightRadius: "10px",

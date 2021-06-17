@@ -35,4 +35,4 @@ export const getSharedPosts = (id) => API.get(`/forgettable/${id}/shared`);
 export const getAllSharedPosts = () => API.get("/forgettable/shares");
 export const updatePost = (pid, updatedData) => API.patch(`/forgettable/${pid}`, updatedData);
 export const getSavedPost = (id) => API.get(`/forgettable/${id}/saved`);
-export const getImage = (pid) => API.get(`/forgettable/${pid}/lgimage`)
+// export const getImages = (pids) => API.get(`/forgettable/images`, pids);

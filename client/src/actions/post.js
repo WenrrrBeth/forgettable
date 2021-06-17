@@ -2,8 +2,10 @@ import { POST, FETCH_UNSHARED, FETCH_SHARED, FETCH_ALL_SHARED, SAVE, FETCH_SAVED
 import * as api from "../api/index";
 
 export const postEvent = (inputData, history) => async (dispatch) => {
+    console.log(inputData)
     try {
         const { data } = await api.postevent(inputData);
+        console.log(data)
         dispatch({ type: POST, data });
         history.push("/profile");
     } catch (error) {
@@ -56,12 +58,12 @@ export const getSavedPost = (id) => async (dispatch) => {
     }
 }
 
-export const getImage = (pid) => async (dispatch) => {
-    try {
-        const { data } = await api.getImage(pid);
-        console.log("get request sent")
-        dispatch({ type: FETCH_IMAGE, payload: data });
-    } catch (error) {
-        console.log(error);
-    }
-}
+// export const getImages = (pids) => async (dispatch) => {
+//     try {
+//         const { data } = await api.getImages(pids);
+//         console.log("get request sent")
+//         dispatch({ type: FETCH_IMAGE, payload: data });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }

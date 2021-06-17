@@ -3,10 +3,7 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 import React, { useState, useEffect } from "react";
-import { LazyLoadImage, LazyLoadComponent } from 'react-lazy-load-image-component';
-// import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../actions/profile";
 import { getAllSharedPosts, updatePost } from "../../actions/post";
@@ -18,22 +15,18 @@ const Home = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
   const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([])
 
   const profile = useSelector((state) => state.profile);
-  const posts = useSelector((state) => state.forgettable);
-
-
-
-  let scrollPosition = {
-    x: typeof window === "undefined" ? 0 : window.scrollX || window.pageXOffset,
-    y: typeof window === "undefined" ? 0 : window.scrollY || window.pageYOffset,
-  }
+  const postsSelector = useSelector((state) => state.forgettable);
 
   useEffect(() => {
     user?.result._id && dispatch(getProfile(user?.result._id));
-    dispatch(getAllSharedPosts());
     posts[0]?.title ? setLoading(false) : setLoading(true);
-  }, [user?.result?._id, dispatch, posts]);
+    if (posts && postsSelector[postsSelector.length-1]?._id!==posts[posts.length-1]?._id && posts.length < 300) {
+      setPosts([...posts, ...postsSelector]);
+    }
+  }, [user?.result?._id, dispatch, postsSelector, posts]);
 
   const handleClick = (post) => {
     if (post.saves.includes(profile?._id)) {
@@ -50,75 +43,74 @@ const Home = () => {
     }
   };
 
+  const handleIntersect = (entries) => {
+    if (entries[0].isIntersecting) {
+      console.log("Intersecting")
+      dispatch(getAllSharedPosts());
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    let opts = {
+      root: null,
+      rootMargins: "0px",
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, opts);
+    observer.observe(document.querySelector("footer"));
+    dispatch(getAllSharedPosts());
+  })
+
+
   return (
     <Container className={classes.homeContainer}>
       <div className={classes.header}>
         <Typography className={classes.homeTitle} variant="h5">
           Home
         </Typography>
-        {loading && (
-          <div className={classes.loadSktCol}>
-            <div className={classes.loadSktRow}>
-              <Skeleton variant="rect" height={270} width={300} />
-              <Skeleton variant="rect" height={270} width={300} />
-              <Skeleton variant="rect" height={270} width={300} />
-            </div>
-            <div className={classes.loadSktRow}>
-              <Skeleton variant="rect" height={270} width={300} />
-              <Skeleton variant="rect" height={270} width={300} />
-              <Skeleton variant="rect" height={270} width={300} />
-            </div>
-            <div className={classes.loadSktRow}>
-              <Skeleton variant="rect" height={270} width={300} />
-              <Skeleton variant="rect" height={270} width={300} />
-              <Skeleton variant="rect" height={270} width={300} />
-            </div>
-          </div>
-        )}
       </div>
       <Container className={classes.gridPost}>
           {
-            posts.map((post, index) => (
-              <div key={index} className={classes.imageCol}>
-
-                <LazyLoadComponent >
-                  <img className={classes.image} src={post?.image.data} alt={post?.title} />
-                  <Container className={classes.detailContainer}>
-                    <Container className={classes.stretch}>
-                      <Typography className={classes.title}>{post?.title}</Typography>
-                    </Container>
-                    <IconButton
-                        className={classes.saveIcon}
-                        onClick={() => handleClick(post)}
-                      >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill={
-                          user?.result._id
-                            ? (post?.saves.includes(user?.result?._id) || post?.saves.includes(user?.result?.googleId))
-                              ? "lightblue"
-                              : "none"
-                            : "white"
-                        }
-                        stroke={user?.result._id ? "lightblue" : "white"}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                      </svg>
-                    </IconButton>
+            posts?.map((post, index) => (
+              <div id={`card${index}`} key={index} className={classes.imageCol} >
+                <img className={classes.image} src={post?.image?.data} alt={post?.title} id={post._id} idx={index} />
+                <Container className={classes.detailContainer}>
+                  <Container className={classes.stretch}>
+                    <Typography className={classes.title}>{post?.title}</Typography>
                   </Container>
-                </LazyLoadComponent>
-
-
+                  <IconButton
+                      className={classes.saveIcon}
+                      onClick={() => handleClick(post)}
+                    >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill={
+                        user?.result?._id
+                          ? (post?.saves?.includes(user?.result?._id) || post?.saves?.includes(user?.result?.googleId))
+                            ? "lightblue"
+                            : "none"
+                          : "white"
+                      }
+                      stroke={user?.result._id ? "lightblue" : "white"}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </IconButton>
+                </Container>
               </div>
             ))
           }
       </Container>
+      <footer>
+        <p>2021 by Beth Ding</p>
+      </footer>
     </Container>
   );
 };

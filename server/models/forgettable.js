@@ -17,11 +17,11 @@ const postSchema = mongoose.Schema({
     data: {
       type: String,
       default: "",
-    },
-    lgData: {
-      type: String,
-      default: "",
     }
+  },
+  index: {
+    type: Number,
+    required: true,
   },
   saves: [],
   createdAt: {
