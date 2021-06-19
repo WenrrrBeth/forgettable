@@ -38,16 +38,60 @@ const Authentication = () => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
+  const checkInput = () => {
+    let validate = true;
+    const invalid = ['%', '&', '<', '>', '[', ']', '{', '}', '=']
+    if (login) {
+      inputData.email.split('').forEach((char) => {
+        invalid.forEach((invalidchar) => {
+          if (char===invalidchar) {
+            setErrMsg("Your input contains illegal characters. Please enter a valid username and password.")
+            validate = false;
+          }
+        })
+      })
+      return validate;
+    } else {
+      inputData.email.split('').forEach((char) => {
+        invalid.forEach((invalidchar) => {
+          if (char===invalidchar) {
+            setErrMsg("Your input contains illegal characters. Please enter a valid username and password.")
+            validate = false;
+          }
+        })
+      })
+      inputData.preferredName.split('').forEach((char) => {
+        invalid.forEach((invalidchar) => {
+          if (char===invalidchar) {
+            setErrMsg("Your input contains illegal characters. Please enter a valid username and password.")
+            validate = false;
+          }
+        })
+      })
+      if (!inputData.email.split('').includes('@')) {
+        setErrMsg("Incorrect email format")
+        validate = false;
+      }
+      if (inputData.password !== inputData.confirmPassword) {
+        setErrMsg("Password does not match")
+        validate = false;
+      }
+      console.log("true2")
+      return validate;
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrMsg(null);
     if (login) {
-      dispatch(signin(inputData, history))
-        .then((msg) => msg && setTimeout(() => setErrMsg(msg), 10));
+      if (checkInput()){
+        console.log("Processing dispatch")
+        dispatch(signin(inputData, history))
+          .then((msg) => msg && setTimeout(() => setErrMsg(msg), 10));
+      }
     } else {
-      if (!inputData.email.split('').includes('@')) setErrMsg("Incorrect email format")
-      if (inputData.password !== inputData.confirmPassword) setErrMsg("Password does not match")
-      dispatch(signup(inputData, history));
+      if (checkInput()) dispatch(signup(inputData, history));
     }
   };
 

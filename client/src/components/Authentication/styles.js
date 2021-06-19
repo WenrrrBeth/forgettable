@@ -7,7 +7,7 @@ const theme = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  errMsg:{
+  err:{
     width: "fit-content",
     justifyContent: "center",
     alignSelf: "center",

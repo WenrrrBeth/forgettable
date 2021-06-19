@@ -6,6 +6,7 @@ import {
   Chip,
   Button,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -20,7 +21,7 @@ const Postform = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [hashTags, setHashTags] = useState([]);
-  const [invalid, setInvalid] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
   const [fgtbData, setFgtbData] = useState({
     by: "",
     title: "",
@@ -31,6 +32,26 @@ const Postform = () => {
   });
   const [fgtbImgName, setFgtbImgName] = useState("No files choosen.");
   const user = JSON.parse(localStorage.getItem("profile"));
+
+  const checkInput = () => {
+    let validate = true;
+    const invalid = ['%', '&', '<', '>', '[', ']', '{', '}', '=']
+    fgtbData.title.split('').forEach((char) => {
+      invalid.forEach((invalidChar) => {
+        if (char === invalidChar) {
+          validate = false;
+        }
+      })
+    })
+    fgtbData.content.split('').forEach((char) => {
+      invalid.forEach((invalidChar) => {
+        if (char === invalidChar) {
+          validate = false;
+        }
+      })
+    })
+    return validate;
+  }
 
   const clearData = () => {
     setFgtbData({
@@ -49,7 +70,9 @@ const Postform = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!fgtbData.image.data) {
-      setInvalid(true);
+      setErrMsg("Please choose an image.");
+    } else if (!checkInput()) {
+      setErrMsg("Your input contains illegal characters. Please enter a valid username and password.")
     } else {
       dispatch(
         postEvent({ ...fgtbData, by: user?.result?._id, tags: hashTags }, history)
@@ -110,7 +133,7 @@ const Postform = () => {
   const handleFgtbChange = async (e) => {
     const file = e.target.files[0];
     setFgtbImgName(file.name)
-    setInvalid(false)
+    setErrMsg("")
     try {
       writeImageData(file);
     } catch (error) {
@@ -120,6 +143,11 @@ const Postform = () => {
 
   return (
     <Container className={classes.postFormContainer}>
+    {
+      errMsg && (
+        <Alert className={classes.err} severity="error">{errMsg}</Alert>
+      )
+    }
       <Grid container className={classes.postFormGrid}>
         <Typography className={classes.title} variant="h6">
           What's with today?
@@ -138,12 +166,13 @@ const Postform = () => {
                 className={classes.inputTheme}
                 name="title"
                 label="Title"
-                onChange={(e) =>
+                onChange={(e) => {
+                  setErrMsg("");
                   setFgtbData({
                     ...fgtbData,
                     title: e?.target.value,
-                  })
-                }
+                  });
+                }}
                 variant="filled"
                 required
               />
@@ -152,6 +181,7 @@ const Postform = () => {
                 name="content"
                 label="Content"
                 onChange={(e) => {
+                  setErrMsg("");
                   setFgtbData({ ...fgtbData, content: e?.target.value });
                 }}
                 variant="filled"
@@ -222,9 +252,6 @@ const Postform = () => {
                   {fgtbImgName}
                 </Typography>
               </div>
-              {
-                invalid && <Typography className={classes.warning}>Please choose an image.</Typography>
-              }
               <div className={classes.optButtons}>
                 <Button className={classes.button} component={Link} to="/profile">
                   Cancel

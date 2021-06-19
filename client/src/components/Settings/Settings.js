@@ -5,6 +5,7 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -22,6 +23,7 @@ const Settings = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [profileimg, setProfileimg] = useState("");
   const [bgimg, setBgimg] = useState("");
+  const [errMsg, setErrMsg] = useState("")
 
   useEffect(() => {
     dispatch(getProfile(user.result._id));
@@ -38,6 +40,26 @@ const Settings = () => {
       },
     },
   });
+
+  const checkInput = () => {
+    let validate = true;
+    const invalid = ['%', '&', '<', '>', '[', ']', '{', '}', '=']
+    userData.name.split('').forEach((char) => {
+      invalid.forEach((invalidChar) => {
+        if (char === invalidChar) {
+          validate = false;
+        }
+      })
+    })
+    userData.mind.split('').forEach((char) => {
+      invalid.forEach((invalidChar) => {
+        if (char === invalidChar) {
+          validate = false;
+        }
+      })
+    })
+    return validate;
+  }
 
   const resizeFile = (file) => 
     new Promise((resolve) => {
@@ -59,9 +81,13 @@ const Settings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      updateProfile(profile?._id, { ...userData, email: user.result.email }, history)
-    );
+    if (!checkInput()) {
+      setErrMsg("Your input contains illegal characters. Please enter a valid username and password.")
+    } else {
+      dispatch(
+        updateProfile(profile?._id, { ...userData, email: user.result.email }, history)
+      );
+    }
     setProfileimg("");
     setBgimg("");
   };
@@ -132,6 +158,11 @@ const Settings = () => {
 
   return (
     <Container className={classes.settingsContainer}>
+      {
+        errMsg && (
+          <Alert className={classes.err} severity="error">{errMsg}</Alert>
+        )
+      }
       <Grid container className={classes.settingsGrid}>
         <Typography className={classes.title} variant="h6">
           Settings
@@ -150,12 +181,13 @@ const Settings = () => {
                 className={classes.inputTheme}
                 name="name"
                 label="Name"
-                onChange={(e) =>
+                onChange={(e) => {
+                  setErrMsg("");
                   setUserData({
                     ...userData,
                     name: e.target.value ? e.target.value : profile?.name,
-                  })
-                }
+                  });
+                }}
                 variant="filled"
                 required
                 defaultValue={user.result.name}
@@ -172,9 +204,10 @@ const Settings = () => {
                 className={classes.inputTheme}
                 name="mind"
                 label="What's on your mind?"
-                onChange={(e) =>
-                  setUserData({ ...userData, mind: e?.target.value })
-                }
+                onChange={(e) => {
+                  setErrMsg("");
+                  setUserData({ ...userData, mind: e?.target.value });
+                }}
                 variant="filled"
                 required
                 multiline

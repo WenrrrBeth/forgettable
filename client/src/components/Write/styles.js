@@ -3,6 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 const theme = makeStyles((theme) => ({
     postFormContainer: {
         marginTop: "60px",
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+    },
+    err:{
+      width: "fit-content",
+      justifyContent: "center",
+      alignSelf: "center",
     },
     postFormGrid: {
         display: "flex",
@@ -54,13 +62,13 @@ const theme = makeStyles((theme) => ({
     fileName: {
         marginLeft: "10px",
     },
-    warning: {
-        marginTop: "5px",
-        textAlign: "left",
-        width: "100%",
-        fontSize: "15px",
-        color: "red",
-    },
+    // warning: {
+    //     marginTop: "5px",
+    //     textAlign: "left",
+    //     width: "100%",
+    //     fontSize: "15px",
+    //     color: "red",
+    // },
     optButtons: {
         marginTop: "30px",
         display: "flex",

@@ -3,6 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 const theme = makeStyles((theme) => ({
   settingsContainer: {
     marginTop: "60px",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
+  err:{
+    width: "fit-content",
+    justifyContent: "center",
+    alignSelf: "center",
   },
   settingsGrid: {
     display: "flex",
