@@ -1,4 +1,4 @@
-import { POST, FETCH_UNSHARED, FETCH_SHARED, FETCH_ALL_SHARED, SAVE, FETCH_SAVED, FETCH_IMAGE } from "../constants/actiontypes";
+import { POST, FETCH_UNSHARED, FETCH_SHARED, FETCH_ALL_SHARED, SAVE, FETCH_SAVED } from "../constants/actiontypes";
 import * as api from "../api/index";
 
 export const postEvent = (inputData, history) => async (dispatch) => {
@@ -58,12 +58,3 @@ export const getSavedPost = (id) => async (dispatch) => {
     }
 }
 
-// export const getImages = (pids) => async (dispatch) => {
-//     try {
-//         const { data } = await api.getImages(pids);
-//         console.log("get request sent")
-//         dispatch({ type: FETCH_IMAGE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }

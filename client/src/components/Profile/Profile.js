@@ -10,7 +10,6 @@ import {
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import decode from "jwt-decode";
 import useStyles from "./styles.js";
 import { withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -76,13 +75,6 @@ const Profile = () => {
     dispatch(getUnsharedPosts(user?.result?._id ? user?.result?._id : user?.result?.googleId));
     dispatch(getSharedPosts(user?.result?._id ? user?.result?._id : user?.result?.googleId));
     dispatch(getSavedPost(user?.result?._id ? user?.result?._id : user?.result?.googleId));
-
-    const token = user?.token;
-    if (token) {
-        const decodedToken = decode(token);
-        if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-    }
-    setUser(JSON.parse(localStorage.getItem('profile')));
   }, [user?.result?._id, user?.result?.googleId, dispatch, location, user?.token, logout]);
 
   const profile = useSelector((state) => state.profile);
@@ -101,7 +93,6 @@ const Profile = () => {
         return <Detailposts posts={unsharedPosts} />;
       }  
       return <Typography className={classes.title}>You have no personal posts</Typography>;
-      // return <Detailposts posts={unsharedPosts} />;
     } else if (subNav === 1) {
       // detailed shared posts prop
       if (sharedPosts[0]) {

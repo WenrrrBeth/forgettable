@@ -1,27 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 
 import useStyles from "./styles";
 import { Typography, Toolbar, AppBar, IconButton } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../constants/actiontypes";
+import decode from "jwt-decode";
 import "../../fonts.css";
 
 const Navigation = () => {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
 
   const navOpt = location.pathname;
 
   useEffect(() => {
-    // if (!user && navOpt==="/profile") {
-    //   history.push("/profile/authenticate")
-    // } else if (user && navOpt==="/profile/authenticate") {
-    //   history.push("/profile");
-    // } else if (navOpt!=="/"||navOpt!=="/write"||navOpt!=="/profile"||navOpt!=="/profile/authenticate"||navOpt!=="/profile/settings") {
-    //   history.push("/");
-    // }
-  }, [])
+    if (!user && navOpt==="/profile") {
+      history.push("/profile/authenticate")
+    } else if (user && navOpt==="/profile/authenticate") {
+      history.push("/profile");
+    } else if (navOpt!=="/"&&navOpt!=="/write"&&navOpt!=="/profile"&&navOpt!=="/profile/authenticate"&&navOpt!=="/profile/settings") {
+      console.log("huh?")
+      history.push("/");
+    }
+  }, [history, navOpt, user])
+
+  const logout = useCallback(() => {
+    dispatch({ type: LOGOUT });
+    history.push("/profile/authenticate");
+    setUser(null);
+  }, [dispatch, history]);
+
+  useEffect(() => {
+    const token = user?.token;
+    if (token) {
+        const decodedToken = decode(token);
+        if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [user?.result?._id, user?.result?.googleId, dispatch, location, user?.token, logout]);
 
   return (
     <AppBar

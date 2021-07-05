@@ -18,7 +18,7 @@ export const signin = async (req, res) => {
       registeredUser.password
     );
     if (!checkPassword)
-      return res.status(404).json({ message: "Incorrect password." });
+      return res.status(403).json({ message: "Incorrect password." });
 
     //signing the json web token
     const token = jwt.sign(
@@ -26,6 +26,7 @@ export const signin = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: `${process.env.JWS_EXPIRES_IN}h` }
     );
+
     res.status(200).json({ result: registeredUser, token });
   } catch (error) {
     console.log(error);

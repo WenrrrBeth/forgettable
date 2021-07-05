@@ -5,22 +5,11 @@ const theme = makeStyles((theme) => ({
     marginTop: "80px",
     width: "100%",
     display: "flex",
+    flexDirection: "column",
     flexWrap: "wrap",
     justifyContent: "space-around",
+    alignItems: "center",
     margin: "0px",
-  },
-  loadSktRow: {
-    display: "flex",
-    flexDirection: "row",
-    wrap: "wrap",
-    gap: "10px",
-    marginBottom: "10px",
-    alignSelf: "center",
-  },
-  loadSktCol: {
-    diplay: "flex",
-    flexDirection: "column",
-    alignSelf: "center",
   },
   gridPost: {
     columnCount: "4",
@@ -80,6 +69,14 @@ const theme = makeStyles((theme) => ({
     width: "20px",
     height: "20px",
     justifyContent: "flex-end"
+  },
+  saveLoadIcon: {
+    margin: "0px",
+    padding: "0px",
+    width: "20px",
+    height: "20px",
+    justifyContent: "flex-end",
+    color: "lightblue",
   },
   [theme.breakpoints.down('md')]:{
     detailContainer: {

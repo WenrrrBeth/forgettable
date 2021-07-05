@@ -24,6 +24,7 @@ const Authentication = () => {
   const [login, setLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const [sccMsg, setSccMsg] = useState("");
   const [inputData, setInputData] = useState({
     email: "",
     preferredName: "",
@@ -76,14 +77,14 @@ const Authentication = () => {
         setErrMsg("Password does not match")
         validate = false;
       }
-      console.log("true2")
       return validate;
     }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrMsg(null);
+    setErrMsg("");
+    setSccMsg("");
     if (login) {
       if (checkInput()){
         console.log("Processing dispatch")
@@ -91,7 +92,11 @@ const Authentication = () => {
           .then((msg) => msg && setTimeout(() => setErrMsg(msg), 10));
       }
     } else {
-      if (checkInput()) dispatch(signup(inputData, history));
+      if (checkInput()) {
+        dispatch(signup(inputData));
+        setSccMsg(`${inputData.email} is successfully registered.`);
+        setLogin(true);
+      }
     }
   };
 
@@ -127,6 +132,11 @@ const Authentication = () => {
   return (
     <Container className={classes.authContainer}>
       {
+        sccMsg && (
+          <Alert className={classes.err} severity="success">{sccMsg}</Alert>
+        )
+      }
+      {
         errMsg && (
           <Alert className={classes.err} severity="error">{errMsg}</Alert>
         )
@@ -137,7 +147,8 @@ const Authentication = () => {
         </Typography>
         <Link className={classes.signupOpt} onClick={() => {
           setLogin(!login)
-          setErrMsg(null)
+          setErrMsg("")
+          setSccMsg("")
         }}>
           <Typography className={classes.signuplead} variant="body1">
             {login ? "Don't have an account?" : "Already have an account?"}
@@ -162,7 +173,7 @@ const Authentication = () => {
                   onChange={handleChange}
                   variant="filled"
                   required
-                  autoComplete="on"
+                  autoComplete="off"
                 />
                 {!login && (
                   <TextField
@@ -172,7 +183,7 @@ const Authentication = () => {
                     onChange={handleChange}
                     variant="filled"
                     required
-                    autoComplete="on"
+                    autoComplete="off"
                   />
                 )}
                 <TextField

@@ -249,7 +249,7 @@ const Settings = () => {
                 <Typography className={classes.fileName}>
                   {bgimg 
                     ? bgimg
-                    : profile?.bgimg?.filename ? profile?.bgimg?.filename : "no files choosen"}
+                    : profile?.bgimg?.filename ? profile?.bgimg?.filename : "No files choosen"}
                 </Typography>
               </div>
               <div className={classes.optButtons}>

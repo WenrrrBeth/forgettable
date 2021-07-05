@@ -48,9 +48,6 @@ const profileSchema = mongoose.Schema({
       default: "",
     }
   },
-  // personal: [String],
-  // shared: [String],
-  // saved: [String],
 });
 
 const Profile = mongoose.model("Profile", profileSchema);

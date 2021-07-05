@@ -197,12 +197,6 @@ const Postform = () => {
                 variant="filled"
               />
               <Container className={classes.hashtag}>
-                {/* { hashTags.length > 5 &&
-                    <Alert severity="warning">
-                      <AlertTitle>Warning</AlertTitle>
-                      This is a reminder that you have added more than 5 Tags. <strong>Only 5 tags will be added.</strong>
-                    </Alert>
-                } */}
                 { hashTags &&
                   hashTags.map((tag, i) => (
                     <Chip

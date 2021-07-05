@@ -1,10 +1,15 @@
-import { AUTH, LOGOUT, UPDATE, FETCH_ONE } from "../constants/actiontypes";
+import { AUTH, LOGOUT, UPDATE, FETCH_ONE, SIGNIN, SIGNUP } from "../constants/actiontypes";
 
 const authenticateReducer = (state = { data: null }, action) => {
   switch (action.type) {
     case AUTH:
       localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
       return { ...state, data: action?.data };
+    case SIGNIN:
+      localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
+      return { ...state, data: action?.data };
+    case SIGNUP:
+      return {...state, data: action?.data };
     case LOGOUT:
       localStorage.clear();
       return { ...state, authData: null };

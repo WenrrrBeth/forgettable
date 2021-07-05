@@ -6,8 +6,8 @@ export const postevent = async (req, res) => {
 
     try {
         if (!forgettable.image.data || !forgettable.image.filetype || !forgettable.title ) res.status(400).json({ msessage: "Insufficient information."})
-        const idx = await Forgettable.countDocuments();
-        const newFgtb = new Forgettable({ ...forgettable, by: req.profileId, createdAt: new Date().toISOString(), index: idx+1 });
+        const max = await Forgettable.countDocuments();
+        const newFgtb = new Forgettable({ ...forgettable, by: req.profileId, createdAt: new Date().toISOString(), index: max+1 });
         await newFgtb.save();
         res.status(201).json({ newFgtb })
     } catch (error) {
@@ -20,7 +20,6 @@ export const getUnsharedPosts = async (req, res) => {
     const { id: _id } = req.params;
     try {
         const unsharedFgtb = await Forgettable.find({ by: _id, shared: false }).sort({ createdAt: "desc" });
-        // const reverseUnshared = unsharedFgtb.sort({createdAt: -1});
         res.status(200).json(unsharedFgtb);
     } catch (error) {
         console.log(error);
@@ -29,11 +28,9 @@ export const getUnsharedPosts = async (req, res) => {
 }
 
 export const getSharedPosts = async (req, res) => {
-    // const { pids } = req.body;
     const { id: _id } = req.params;
     try {
         const sharedFgtb = await Forgettable.find({ by: _id, shared: true }).sort({ createdAt: "desc" });
-        // const reverseShared = sharedFgtb.sort({createdAt: -1});
         res.status(200).json(sharedFgtb);
     } catch (error) {
         console.log(error);
@@ -42,7 +39,8 @@ export const getSharedPosts = async (req, res) => {
 }
 
 export const getAllSharedPosts = async (req, res) => {
-    const arr =  Array.from({length: 30}, () => Math.floor(Math.random()*29));
+    const max = await Forgettable.countDocuments();
+    const arr =  Array.from({length: 30}, () => Math.floor(Math.random()*max));
     const uniqueArr = arr.filter((el, idx, self) => {
         return idx === self.indexOf(el);
     })
@@ -84,14 +82,3 @@ export const getSavedPost = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
-
-// export const getImages = async (req, res) => {
-//     const { pids } = req.body;
-//     try {
-//         const image = await Forgettable.find({'_id': { $in: pids }}).select('id image.data')
-//         res.status(200).json(image);
-//     } catch (error) {
-//         console.log(error);
-//         res.status(404).json({ message: error.message });
-//     }
-// }
