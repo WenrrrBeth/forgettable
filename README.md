@@ -20,10 +20,13 @@
 
 
 ## Web App Demo
-**Computer Version**
+**Computer Version**</br>
+![forgettable_computer (3)](https://user-images.githubusercontent.com/66856868/124522039-98a21200-dda6-11eb-9104-a2fbfb2bea65.gif)
 
 
-**Mobile Version**
+**Mobile Version**</br>
+![forgettable_mobile (3)](https://user-images.githubusercontent.com/66856868/124522175-1c5bfe80-dda7-11eb-9fa1-1f0816cd5236.gif)
+
 
 ## Local Installation Guide
 - Software Version Requirements:
