@@ -35,7 +35,7 @@
   - npm v6.14.11
   - node v14.16.0
   - MongoDB v4.4.1
-- `git clone <WEBSITE>`
+- `git clone https://github.com/WenrrrBeth/forgettable.git`
 - `cd client && npm install && cd .. && cd server && npm install && cd ..`
 - create your own .env file in both front end and back end following .env.example file
 - to start react app, go into client folder and `npm start`
