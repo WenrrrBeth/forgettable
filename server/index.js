@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import fs from "fs";
 
 import profileRoutes from "./routes/profile.js";
 import forgettableRoutes from "./routes/post.js";
