@@ -1,11 +1,13 @@
 # Forgettable
-**This is a full stack CRUD project using MongoDB, Express, React, and Node.js**
+**This is a full stack CRUD project using MongoDB, Express, React, and Node.js.**
 
 ## Features
 - Login/Signup/Google login
 - Upload images
 - Sharing images/texts/tags
-- Saving
+- Saving other's shared images
+- Author may see the number of saves (only visible to the author who post it)
+- Save personal images/texts/tags (will not be shared in Home)
 - Image Grid
 
 ## Modules Used
