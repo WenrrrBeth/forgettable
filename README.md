@@ -8,7 +8,7 @@
 - Saving
 - Image Grid
 
-## Usage
+## Modules Used
 - material-ui
 - react-router-dom
 - react-redux
