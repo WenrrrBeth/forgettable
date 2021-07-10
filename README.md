@@ -40,7 +40,6 @@
 - create your own .env file in both front end and back end following .env.example file
 - to start react app, make sure to `npm start` in both client folder, and server folder
 
-###### Go to <LINK> to check out the live app.
 
 
 
